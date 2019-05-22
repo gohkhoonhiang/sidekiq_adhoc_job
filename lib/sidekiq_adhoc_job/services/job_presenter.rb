@@ -1,3 +1,4 @@
+# References: https://github.com/moove-it/sidekiq-scheduler/blob/master/lib/sidekiq-scheduler/job_presenter.rb
 module SidekiqAdhocJob
   class JobPresenter
     include Sidekiq::WebHelpers
