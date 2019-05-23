@@ -8,7 +8,7 @@ module SidekiqAdhocJob
         acc[k.to_sym] = v
         acc
       end
-      @worker_klass = StringUtil.classify(job_name).constantize
+      @worker_klass = StringUtil.constantize(StringUtil.classify(job_name))
       parse_params
     end
 

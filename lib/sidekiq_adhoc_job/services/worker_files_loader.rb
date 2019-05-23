@@ -6,7 +6,9 @@ module SidekiqAdhocJob
     @_worker_files = []
 
     def self.load
-      Dir[WORKER_PATH_PATTERN].reject { |file_name| file_name.match(/spec/) }.sort.each do |file_name|
+      Dir[WORKER_PATH_PATTERN].reject do |file_name|
+        file_name.match(/spec/) && SidekiqAdhocJob.config.ignore_spec
+      end.sort.each do |file_name|
         @_worker_files << file_name unless @_worker_files.include?(file_name)
       end
     end

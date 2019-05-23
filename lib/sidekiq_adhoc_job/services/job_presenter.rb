@@ -39,7 +39,7 @@ module SidekiqAdhocJob
     end
 
     def self.convert_file_name_to_presenter(file_name)
-      klass_name = StringUtil.classify(file_name).constantize
+      klass_name = StringUtil.constantize(StringUtil.classify(file_name))
       klass_obj = klass_name.new
       queue = klass_name.sidekiq_options['queue']
       args = klass_obj
