@@ -23,7 +23,8 @@ module SidekiqAdhocJob
   end
 end
 
+require_relative './utils/string'
+require_relative './services/job_presenter'
 Dir[File.join(ROUTE_PATH, '**/*.rb')].each do |file_name|
   require_relative file_name
 end
-require_relative './services/job_presenter'
