@@ -11,6 +11,22 @@ module SidekiqAdhocJob
       DASHERIZE_SEPARATOR        ||= '-'.freeze
       CLASSIFY_WORD_SEPARATOR    ||= /#{CLASSIFY_SEPARATOR}|#{NAMESPACE_SEPARATOR}|#{UNDERSCORE_SEPARATOR}|#{DASHERIZE_SEPARATOR}/.freeze
 
+      # Return a CamelCase version of the string
+      # If the given string is a file name, it will convert each file directory into a CamelCase namespace
+      #
+      # @see https://github.com/hanami/utils/blob/92ef4464f7ae3e5acba4b8fadc1c8225a81b9b76/lib/hanami/utils/string.rb#L223
+      #
+      # @param input [::String] the input
+      #
+      # @return [::String] the transformed string
+      #
+      # @since 0.1.0
+      #
+      # @example
+      #   require 'sidekiq_adhoc_job/utils/string'
+      #
+      #   SidekiqAdhocJob::Utils::String.classify('sidekiq_adhoc_job') # => 'SidekiqAdhocJob'
+      #   SidekiqAdhocJob::Utils::String.classify('sidekiq_adhoc_job/utils/string') # => 'SidekiqAdhocJob::Utils::String'
       def self.classify(input)
         string = ::String.new(input.to_s)
         words = underscore(string).split(CLASSIFY_WORD_SEPARATOR).map!(&:capitalize)
@@ -23,9 +39,24 @@ module SidekiqAdhocJob
         words.zip(delimiters).join
       end
 
+      # Return a downcased and underscore separated version of the string
+      # If the given string is a namespaced class name, it will convert the namespace separator :: into a file path separator /
+      #
+      # @see https://github.com/hanami/utils/blob/92ef4464f7ae3e5acba4b8fadc1c8225a81b9b76/lib/hanami/utils/string.rb#L250
+      #
+      # @param input [::String] the input
+      #
+      # @return [::String] the transformed string
+      #
+      # @since 0.1.0
+      #
+      # @example
+      #   require 'sidekiq_adhoc_job/utils/string'
+      #
+      #   SidekiqAdhocJob::Utils::String.underscore('SidekiqAdhocJob') # => 'sidekiq_adhoc_job'
+      #   SidekiqAdhocJob::Utils::String.underscore('SidekiqAdhocJob::Utils::String') # => 'sidekiq_adhoc_job/utils/string'
       def self.underscore(input)
         string = ::String.new(input.to_s)
-        string.gsub!(NAMESPACE_SEPARATOR, UNDERSCORE_SEPARATOR)
         string.gsub!(NAMESPACE_SEPARATOR, UNDERSCORE_SEPARATOR)
         string.gsub!(/([A-Z\d]+)([A-Z][a-z])/, UNDERSCORE_DIVISION_TARGET)
         string.gsub!(/([a-z\d])([A-Z])/, UNDERSCORE_DIVISION_TARGET)
