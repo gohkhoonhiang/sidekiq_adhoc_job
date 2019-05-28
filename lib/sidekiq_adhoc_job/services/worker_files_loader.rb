@@ -1,12 +1,10 @@
 module SidekiqAdhocJob
   class WorkerFilesLoader
 
-    WORKER_PATH_PATTERN ||= SidekiqAdhocJob.config.worker_path_pattern.freeze
-
     @_worker_files = []
 
-    def self.load
-      Dir[WORKER_PATH_PATTERN].reject do |file_name|
+    def self.load(worker_path_pattern)
+      Dir[worker_path_pattern].reject do |file_name|
         file_name.match(/spec/) && SidekiqAdhocJob.config.ignore_spec
       end.sort.each do |file_name|
         @_worker_files << file_name unless @_worker_files.include?(file_name)
