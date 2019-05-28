@@ -24,7 +24,7 @@ RSpec.describe 'GET /adhoc_jobs' do
         <td>retry_job, retries, interval</td>
         <td class="text-center">
           <a class="btn btn-warn btn-xs" href="/adhoc-jobs/dummy_worker">
-            Run Job
+            View Job
           </a>
         </td>
       </tr>

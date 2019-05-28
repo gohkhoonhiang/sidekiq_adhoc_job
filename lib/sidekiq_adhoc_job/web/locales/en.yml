@@ -7,3 +7,4 @@ en:
   adhoc_jobs_queue: Job Queue
   adhoc_jobs_required_arguments: Required Arguments
   adhoc_jobs_run_job: Run Job
+  adhoc_jobs_view_job: View Job
