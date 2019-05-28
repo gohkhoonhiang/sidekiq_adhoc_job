@@ -1,6 +1,6 @@
-require_relative '../../../lib/sidekiq_adhoc_job/services/job_presenter'
+require_relative '../../../lib/sidekiq_adhoc_job/web/job_presenter'
 
-RSpec.describe SidekiqAdhocJob::JobPresenter do
+RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
   include_context 'SidekiqAdhocJob setup'
 
   subject { described_class }

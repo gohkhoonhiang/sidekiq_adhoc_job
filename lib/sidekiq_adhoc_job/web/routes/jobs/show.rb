@@ -6,7 +6,7 @@ module SidekiqAdhocJob
         def self.register(app)
           app.get '/adhoc-jobs/:name' do
             @csrf_token = env['rack.session'][:csrf]
-            @presented_job = SidekiqAdhocJob::JobPresenter.find(params[:name])
+            @presented_job = SidekiqAdhocJob::Web::JobPresenter.find(params[:name])
             if @presented_job
               erb File.read(File.join(VIEW_PATH, 'jobs/show.html.erb'))
             else

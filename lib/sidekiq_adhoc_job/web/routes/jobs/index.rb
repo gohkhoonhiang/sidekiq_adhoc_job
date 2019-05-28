@@ -5,7 +5,7 @@ module SidekiqAdhocJob
 
         def self.register(app)
           app.get '/adhoc-jobs' do
-            @presented_jobs = SidekiqAdhocJob::JobPresenter.build_collection
+            @presented_jobs = SidekiqAdhocJob::Web::JobPresenter.build_collection
 
             erb File.read(File.join(VIEW_PATH, 'jobs/index.html.erb'))
           end
