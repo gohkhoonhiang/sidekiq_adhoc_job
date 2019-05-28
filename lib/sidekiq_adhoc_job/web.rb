@@ -1,6 +1,4 @@
 require 'pathname'
-require 'sidekiq'
-require 'sidekiq/web'
 
 ROUTE_PATH ||= File.expand_path('web/routes', __dir__)
 
@@ -23,8 +21,6 @@ module SidekiqAdhocJob
   end
 end
 
-require_relative './utils/string'
-require_relative './services/job_presenter'
 Dir[File.join(ROUTE_PATH, '**/*.rb')].each do |file_name|
   require_relative file_name
 end

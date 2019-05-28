@@ -1,3 +1,10 @@
+require 'sidekiq'
+require 'sidekiq/web'
+
+require 'sidekiq_adhoc_job/utils/string'
+require 'sidekiq_adhoc_job/services/worker_files_loader'
+require 'sidekiq_adhoc_job/web'
+
 module SidekiqAdhocJob
 
   InvalidConfigurationError ||= Class.new(RuntimeError)
@@ -31,7 +38,3 @@ module SidekiqAdhocJob
   end
 
 end
-
-Dir[File.join(File.expand_path('sidekiq_adhoc_job/utils', __dir__), '**/*.rb')].each { |file_name| require_relative file_name }
-Dir[File.join(File.expand_path('sidekiq_adhoc_job/services', __dir__), '**/*.rb')].each { |file_name| require_relative file_name }
-Dir[File.join(File.expand_path('sidekiq_adhoc_job', __dir__), '*.rb')].each { |file_name| require_relative file_name }
