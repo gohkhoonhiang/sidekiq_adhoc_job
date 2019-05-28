@@ -19,7 +19,7 @@ module SidekiqAdhocJob
   end
 
   def self.init
-    raise InvalidConfigurationError, 'Must configure before init' unless @_config
+    raise InvalidConfigurationError, 'Must configure before init' unless @_config&.configured?
 
     SidekiqAdhocJob::WorkerFilesLoader.load(@_config.worker_path_pattern)
 
@@ -32,8 +32,11 @@ module SidekiqAdhocJob
     attr_accessor :worker_path_pattern, :ignore_spec
 
     def initialize
-      @worker_path_pattern = '**/workers/**/*.rb'
       @ignore_spec = true
+    end
+
+    def configured?
+      !@worker_path_pattern.nil?
     end
   end
 
