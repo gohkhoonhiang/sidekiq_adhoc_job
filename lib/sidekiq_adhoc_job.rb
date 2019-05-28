@@ -2,7 +2,7 @@ require 'sidekiq'
 require 'sidekiq/web'
 
 require 'sidekiq_adhoc_job/utils/string'
-require 'sidekiq_adhoc_job/services/worker_files_loader'
+require 'sidekiq_adhoc_job/worker_files_loader'
 require 'sidekiq_adhoc_job/web'
 
 module SidekiqAdhocJob
