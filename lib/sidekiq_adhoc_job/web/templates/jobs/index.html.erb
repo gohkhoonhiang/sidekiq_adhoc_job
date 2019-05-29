@@ -1,0 +1,31 @@
+<h3><%= t('adhoc_jobs') %></h3>
+
+<div class="table_container">
+  <table class="table table-hover table-bordered table-striped table-white">
+    <thead>
+      <tr>
+        <th><%= t('adhoc_jobs_name') %></th>
+        <th><%= t('adhoc_jobs_queue') %></th>
+        <th><%= t('adhoc_jobs_required_arguments') %></th>
+        <th><%= t('adhoc_jobs_optional_arguments') %></th>
+        <th><%= t('adhoc_jobs_actions') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @presented_jobs.each do |job| %>
+        <tr>
+          <td><%= job.name %></td>
+          <td><%= job.queue %></td>
+          <td><%= job.required_args.join(', ') %></td>
+          <td><%= job.optional_args.join(', ') %></td>
+          <td class="text-center">
+            <a class="btn btn-warn btn-xs" href="<%= root_path %>adhoc-jobs/<%= URI.escape(job.path_name) %>">
+              <%= t('adhoc_jobs_view_job') %>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
