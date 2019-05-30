@@ -20,7 +20,7 @@ RSpec.describe SidekiqAdhocJob do
 
   describe '.config' do
     it 'returns configuration object' do
-      subject.configure { |config| config.worker_path_pattern = SPEC_WORKER_PATH }
+      subject.configure { |config| config.module_names = ['SidekiqAdhocJob::Test'] }
       expect(subject.config).to be_an_instance_of(SidekiqAdhocJob::Configuration)
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe SidekiqAdhocJob do
     context 'configure first' do
       it 'loads worker files and adds web extension' do
         subject.configure do |config|
-          config.worker_path_pattern = SPEC_WORKER_PATH
+          config.module_names = ['SidekiqAdhocJob::Test', 'SidekiqAdhocJob::OtherTest']
           config.ignore_spec = false
         end
 
@@ -43,10 +43,13 @@ RSpec.describe SidekiqAdhocJob do
 
         subject.init
 
-        expect(SidekiqAdhocJob::WorkerFilesLoader.worker_files).to eq(
+        expect(SidekiqAdhocJob::WorkerClassesLoader.worker_klasses.values).to match_array(
           [
-            'spec/support/fixtures/workers/dummy_no_arg_worker.rb',
-            'spec/support/fixtures/workers/dummy_worker.rb'
+            SidekiqAdhocJob::OtherTest::DifferentNamespaceWorker,
+            SidekiqAdhocJob::Test::DummyNoArgWorker,
+            SidekiqAdhocJob::Test::DummyWorker,
+            SidekiqAdhocJob::Test::NamespacedWorker,
+            SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker
           ]
         )
       end

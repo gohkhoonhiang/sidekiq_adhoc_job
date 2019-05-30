@@ -9,10 +9,10 @@ module SidekiqAdhocJob
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
       # args: { req: [], opt: [] }
-      def initialize(name, queue, args)
+      def initialize(name, path_name, queue, args)
         @name = name
+        @path_name = path_name
         @queue = queue
-        @path_name = StringUtil.underscore(name.to_s.split('::').last)
         @required_args = args[:req] || []
         @optional_args = args[:opt] || []
         @args = @required_args + @optional_args
@@ -23,26 +23,20 @@ module SidekiqAdhocJob
       # @param
       # @return [Array<JobPresenter>] an array with the instances of presenters
       def self.build_collection
-        WorkerFilesLoader.worker_files.map do |worker_file|
-          klass_name = read_klass_name_from_file(worker_file)
-          convert_klass_name_to_presenter(klass_name)
+        WorkerClassesLoader.worker_klasses.map do |path_name, worker_klass|
+          convert_klass_name_to_presenter(path_name, worker_klass)
         end
       end
 
-      def self.find(name)
-        file_path = WorkerFilesLoader.find_file(name)
+      def self.find(path_name)
+        klass_name = WorkerClassesLoader.find_worker_klass(path_name)
 
-        return unless file_path
+        return unless klass_name
 
-        return unless File.exist?(file_path)
-
-        klass_name = read_klass_name_from_file(file_path)
-
-        convert_klass_name_to_presenter(klass_name)
+        convert_klass_name_to_presenter(path_name, klass_name)
       end
 
-      def self.convert_klass_name_to_presenter(file_name)
-        klass_name = StringUtil.constantize(StringUtil.classify(file_name))
+      def self.convert_klass_name_to_presenter(path_name, klass_name)
         klass_obj = klass_name.new
         queue = klass_name.sidekiq_options['queue']
         args = klass_obj
@@ -53,16 +47,7 @@ module SidekiqAdhocJob
                  acc[type] = params.map(&:last)
                  acc
                end
-        new(klass_name, queue, args)
-      end
-
-      def self.read_klass_name_from_file(file_path)
-        file = File.read(file_path)
-        file
-          .split("\n")
-          .select { |line| line =~ /(module)|(class)/ }
-          .map { |str| str.gsub(/module/,'').gsub(/class/,'').strip }
-          .join("::")
+        new(klass_name, path_name, queue, args)
       end
 
     end

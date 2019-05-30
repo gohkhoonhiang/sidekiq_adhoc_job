@@ -8,7 +8,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
   context 'has arguments' do
     it 'generates form for running job' do
-      get '/adhoc-jobs/dummy_worker'
+      get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker'
 
       expect(last_response.status).to eq 200
 
@@ -16,7 +16,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
       expect(response_body).to include(compact_html(
         <<~HTML
-        <form method="POST" action="/adhoc-jobs/dummy_worker/schedule">
+        <form method="POST" action="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker/schedule">
         HTML
       ))
 
@@ -64,7 +64,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
   context 'no argument' do
     it 'generates form for running job' do
-      get '/adhoc-jobs/dummy_no_arg_worker'
+      get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_no_arg_worker'
 
       expect(last_response.status).to eq 200
 
@@ -72,7 +72,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
       expect(response_body).to include(compact_html(
         <<~HTML
-        <form method="POST" action="/adhoc-jobs/dummy_no_arg_worker/schedule">
+        <form method="POST" action="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_no_arg_worker/schedule">
         HTML
       ))
 

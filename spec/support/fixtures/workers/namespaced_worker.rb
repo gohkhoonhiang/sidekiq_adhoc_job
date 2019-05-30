@@ -1,13 +1,15 @@
 require 'sidekiq'
 
-module Test
-  class NamespacedWorker
-    include Sidekiq::Worker
+module SidekiqAdhocJob
+  module Test
+    class NamespacedWorker
+      include Sidekiq::Worker
 
-    sidekiq_options queue: 'dummy'
+      sidekiq_options queue: 'dummy'
 
-    def perform
+      def perform
+      end
+
     end
-
   end
 end

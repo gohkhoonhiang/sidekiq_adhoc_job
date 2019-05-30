@@ -15,25 +15,25 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
   describe '.find' do
     context 'worker file exists' do
       it 'returns found job presenter' do
-        job_presenter = subject.find('dummy_worker')
-        expect(job_presenter.name).to eq DummyWorker
-        expect(job_presenter.path_name).to eq 'dummy_worker'
+        job_presenter = subject.find('sidekiq_adhoc_job_test_dummy_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::DummyWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_dummy_worker'
         expect(job_presenter.queue).to eq 'dummy'
         expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval)
         expect(job_presenter.required_args).to eq %i(id overwrite)
         expect(job_presenter.optional_args).to eq %i(retry_job retries interval)
 
-        job_presenter = subject.find('namespaced_worker')
-        expect(job_presenter.name).to eq Test::NamespacedWorker
-        expect(job_presenter.path_name).to eq 'namespaced_worker'
+        job_presenter = subject.find('sidekiq_adhoc_job_test_namespaced_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NamespacedWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_namespaced_worker'
         expect(job_presenter.queue).to eq 'dummy'
         expect(job_presenter.args).to eq %i()
         expect(job_presenter.required_args).to eq %i()
         expect(job_presenter.optional_args).to eq %i()
 
-        job_presenter = subject.find('nested_namespaced_worker')
-        expect(job_presenter.name).to eq Test::Worker::NestedNamespacedWorker
-        expect(job_presenter.path_name).to eq 'nested_namespaced_worker'
+        job_presenter = subject.find('sidekiq_adhoc_job_test_worker_nested_namespaced_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_worker_nested_namespaced_worker'
         expect(job_presenter.queue).to eq 'dummy'
         expect(job_presenter.args).to eq %i()
         expect(job_presenter.required_args).to eq %i()
