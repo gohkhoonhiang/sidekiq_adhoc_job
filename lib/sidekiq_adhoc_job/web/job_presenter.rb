@@ -12,7 +12,7 @@ module SidekiqAdhocJob
       def initialize(name, queue, args)
         @name = name
         @queue = queue
-        @path_name = StringUtil.underscore(name)
+        @path_name = StringUtil.underscore(name.to_s.split('::').last)
         @required_args = args[:req] || []
         @optional_args = args[:opt] || []
         @args = @required_args + @optional_args
@@ -24,22 +24,24 @@ module SidekiqAdhocJob
       # @return [Array<JobPresenter>] an array with the instances of presenters
       def self.build_collection
         WorkerFilesLoader.worker_files.map do |worker_file|
-          file_name = File.basename(worker_file, '.rb')
-          convert_file_name_to_presenter(file_name)
+          klass_name = read_klass_name_from_file(worker_file)
+          convert_klass_name_to_presenter(klass_name)
         end
       end
 
       def self.find(name)
-        file_name = WorkerFilesLoader.find_file(name)
+        file_path = WorkerFilesLoader.find_file(name)
 
-        return unless file_name
+        return unless file_path
 
-        return unless File.exist?(file_name)
+        return unless File.exist?(file_path)
 
-        convert_file_name_to_presenter(name)
+        klass_name = read_klass_name_from_file(file_path)
+
+        convert_klass_name_to_presenter(klass_name)
       end
 
-      def self.convert_file_name_to_presenter(file_name)
+      def self.convert_klass_name_to_presenter(file_name)
         klass_name = StringUtil.constantize(StringUtil.classify(file_name))
         klass_obj = klass_name.new
         queue = klass_name.sidekiq_options['queue']
@@ -52,6 +54,15 @@ module SidekiqAdhocJob
                  acc
                end
         new(klass_name, queue, args)
+      end
+
+      def self.read_klass_name_from_file(file_path)
+        file = File.read(file_path)
+        file
+          .split("\n")
+          .select { |line| line =~ /(module)|(class)/ }
+          .map { |str| str.gsub(/module/,'').gsub(/class/,'').strip }
+          .join("::")
       end
 
     end
