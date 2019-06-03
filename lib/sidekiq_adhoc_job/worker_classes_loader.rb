@@ -26,7 +26,11 @@ module SidekiqAdhocJob
       qualified_name = [parent_module_name, module_name].compact.join('::')
       return unless VALID_QUALIFIED_CLASS_NAME.match?(qualified_name)
 
-      module_const = StringUtil.constantize(qualified_name)
+      module_const = begin
+                       StringUtil.constantize(qualified_name)
+                     rescue NameError => _e
+                       nil
+                     end
       return unless module_const
 
       if VALID_WORKER_CLASS_NAME.match?(qualified_name)
