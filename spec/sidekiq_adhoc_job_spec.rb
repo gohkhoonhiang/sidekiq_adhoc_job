@@ -20,7 +20,7 @@ RSpec.describe SidekiqAdhocJob do
 
   describe '.config' do
     it 'returns configuration object' do
-      subject.configure { |config| config.module_names = ['SidekiqAdhocJob::Test'] }
+      subject.configure { |config| config.module_names = [:'SidekiqAdhocJob::Test'] }
       expect(subject.config).to be_an_instance_of(SidekiqAdhocJob::Configuration)
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe SidekiqAdhocJob do
     context 'configure first' do
       it 'loads worker files and adds web extension' do
         subject.configure do |config|
-          config.module_names = ['SidekiqAdhocJob::Test', 'SidekiqAdhocJob::OtherTest']
+          config.module_names = [:'SidekiqAdhocJob::Test', :'SidekiqAdhocJob::OtherTest', :'SidekiqAdhocJob::Test::Worker']
           config.ignore_spec = false
         end
 
