@@ -21,8 +21,11 @@ module SidekiqAdhocJob
     attr_reader :request_params, :worker_klass, :allowed_params, :worker_params
 
     def parse_params
-      @allowed_params = worker_klass.new.method(:perform).parameters.flat_map(&:last)
+      @allowed_params = worker_klass.new.method(:perform).parameters.reject { |type, _| type == :rest }.flat_map(&:last)
       @worker_params = allowed_params.map { |key| StringUtil.parse(request_params[key]) }
+      if !!request_params[:rest_args] && !request_params[:rest_args].empty?
+        @worker_params += request_params[:rest_args].split(',').map { |arg| StringUtil.parse(arg.strip) }
+      end
     end
 
   end

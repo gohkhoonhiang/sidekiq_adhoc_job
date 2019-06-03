@@ -47,6 +47,7 @@ RSpec.describe SidekiqAdhocJob do
           [
             SidekiqAdhocJob::OtherTest::DifferentNamespaceWorker,
             SidekiqAdhocJob::Test::DummyNoArgWorker,
+            SidekiqAdhocJob::Test::DummyRestArgsWorker,
             SidekiqAdhocJob::Test::DummyWorker,
             SidekiqAdhocJob::Test::NamespacedWorker,
             SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker
