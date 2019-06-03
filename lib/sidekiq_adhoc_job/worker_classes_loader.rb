@@ -39,7 +39,7 @@ module SidekiqAdhocJob
                          nil
                        end
                      end
-      return unless module_const || module_const.is_a?(Class)
+      return unless module_const && module_const.is_a?(Class)
 
       if VALID_WORKER_CLASS_NAME.match?(qualified_name)
         path_name = StringUtil.underscore(qualified_name).gsub('/', '_')
