@@ -2,6 +2,7 @@ en:
   adhoc_jobs: Adhoc Jobs
   adhoc_jobs_actions: Actions
   adhoc_jobs_go_back: Go Back
+  adhoc_jobs_has_rest_arguments: Has Rest Arguments
   adhoc_jobs_name: Job Name
   adhoc_jobs_optional_arguments: Optional Arguments
   adhoc_jobs_queue: Job Queue
