@@ -36,7 +36,6 @@ RSpec.describe SidekiqAdhocJob do
       it 'loads worker files and adds web extension' do
         subject.configure do |config|
           config.module_names = [:'SidekiqAdhocJob::Test', :'SidekiqAdhocJob::OtherTest', :'SidekiqAdhocJob::Test::Worker']
-          config.ignore_spec = false
         end
 
         expect(Sidekiq::Web).to receive(:register).with(SidekiqAdhocJob::Web)

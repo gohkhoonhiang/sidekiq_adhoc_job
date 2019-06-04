@@ -4,7 +4,6 @@ RSpec.shared_context 'SidekiqAdhocJob setup' do
   before do
     SidekiqAdhocJob.configure do |config|
       config.module_names = [:'SidekiqAdhocJob::Test', :'SidekiqAdhocJob::Test::Worker']
-      config.ignore_spec = false
     end
     SidekiqAdhocJob.init
   end

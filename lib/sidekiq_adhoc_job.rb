@@ -31,11 +31,10 @@ module SidekiqAdhocJob
   end
 
   class Configuration
-    attr_accessor :module_names, :ignore_spec
+    attr_accessor :module_names
 
     def initialize
       @module_names = []
-      @ignore_spec = true
     end
 
     def configured?
