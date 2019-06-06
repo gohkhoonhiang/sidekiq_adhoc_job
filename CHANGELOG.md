@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.1.1
+
+- Fix worker classes loading logic
+  - Instead of reading files and guessing the worker class names, use `.constants` to get actual worker class names
+  - Configuration of the modules to read from required, eg. `[:'YourProject::YourWorkerNamespace']` will read any worker class defined within `YourProject::YourWorkerNamespace` namespace
+- Setup Travis CI
+
 ## 0.1.0
 
 Initial release. Features include:
