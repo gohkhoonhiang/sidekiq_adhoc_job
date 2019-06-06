@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.2
+
+- Fix gemspec to include `*.erb` and `*.yml` files
+
 ## 0.1.1
 
 - Fix worker classes loading logic
