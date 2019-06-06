@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.3
+
+- Fix adhoc job trigger form to take all arguments as required input
+  - There is no easy way to figure out at runtime what are the default values of optional arguments, so we will always ask for all argument values
+
 ## 0.1.2
 
 - Fix gemspec to include `*.erb` and `*.yml` files
