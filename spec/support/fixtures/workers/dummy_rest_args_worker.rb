@@ -2,12 +2,12 @@ require 'sidekiq'
 
 module SidekiqAdhocJob
   module Test
-    class DummyNoArgWorker
+    class DummyRestArgsWorker
       include Sidekiq::Worker
 
       sidekiq_options queue: 'dummy'
 
-      def perform
+      def perform(id, *args)
       end
 
     end

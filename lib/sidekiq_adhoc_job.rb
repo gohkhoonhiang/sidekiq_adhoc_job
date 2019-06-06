@@ -2,7 +2,7 @@ require 'sidekiq'
 require 'sidekiq/web'
 
 require 'sidekiq_adhoc_job/utils/string'
-require 'sidekiq_adhoc_job/worker_files_loader'
+require 'sidekiq_adhoc_job/worker_classes_loader'
 require 'sidekiq_adhoc_job/web/job_presenter'
 require 'sidekiq_adhoc_job/services/schedule_adhoc_job'
 require 'sidekiq_adhoc_job/web'
@@ -23,7 +23,7 @@ module SidekiqAdhocJob
   def self.init
     raise InvalidConfigurationError, 'Must configure before init' unless @_config&.configured?
 
-    SidekiqAdhocJob::WorkerFilesLoader.load(@_config.worker_path_pattern)
+    SidekiqAdhocJob::WorkerClassesLoader.load(@_config.module_names)
 
     Sidekiq::Web.register(SidekiqAdhocJob::Web)
     Sidekiq::Web.tabs['adhoc_jobs'] = 'adhoc-jobs'
@@ -31,14 +31,14 @@ module SidekiqAdhocJob
   end
 
   class Configuration
-    attr_accessor :worker_path_pattern, :ignore_spec
+    attr_accessor :module_names
 
     def initialize
-      @ignore_spec = true
+      @module_names = []
     end
 
     def configured?
-      !@worker_path_pattern.nil?
+      !@module_names.empty?
     end
   end
 

@@ -1,8 +1,8 @@
 require 'sidekiq'
 
 module SidekiqAdhocJob
-  module Test
-    class DummyNoArgWorker
+  module Test::Worker
+    class NestedNamespacedWorker
       include Sidekiq::Worker
 
       sidekiq_options queue: 'dummy'

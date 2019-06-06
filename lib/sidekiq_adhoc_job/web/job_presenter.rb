@@ -4,17 +4,18 @@ module SidekiqAdhocJob
     class JobPresenter
       include Sidekiq::WebHelpers
 
-      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :args
+      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :has_rest_args, :args
 
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
       # args: { req: [], opt: [] }
-      def initialize(name, queue, args)
+      def initialize(name, path_name, queue, args)
         @name = name
+        @path_name = path_name
         @queue = queue
-        @path_name = StringUtil.underscore(name)
         @required_args = args[:req] || []
         @optional_args = args[:opt] || []
+        @has_rest_args = !!args[:rest]
         @args = @required_args + @optional_args
       end
 
@@ -23,24 +24,20 @@ module SidekiqAdhocJob
       # @param
       # @return [Array<JobPresenter>] an array with the instances of presenters
       def self.build_collection
-        WorkerFilesLoader.worker_files.map do |worker_file|
-          file_name = File.basename(worker_file, '.rb')
-          convert_file_name_to_presenter(file_name)
+        WorkerClassesLoader.worker_klasses.map do |path_name, worker_klass|
+          convert_klass_name_to_presenter(path_name, worker_klass)
         end
       end
 
-      def self.find(name)
-        file_name = WorkerFilesLoader.find_file(name)
+      def self.find(path_name)
+        klass_name = WorkerClassesLoader.find_worker_klass(path_name)
 
-        return unless file_name
+        return unless klass_name
 
-        return unless File.exist?(file_name)
-
-        convert_file_name_to_presenter(name)
+        convert_klass_name_to_presenter(path_name, klass_name)
       end
 
-      def self.convert_file_name_to_presenter(file_name)
-        klass_name = StringUtil.constantize(StringUtil.classify(file_name))
+      def self.convert_klass_name_to_presenter(path_name, klass_name)
         klass_obj = klass_name.new
         queue = klass_name.sidekiq_options['queue']
         args = klass_obj
@@ -51,7 +48,7 @@ module SidekiqAdhocJob
                  acc[type] = params.map(&:last)
                  acc
                end
-        new(klass_name, queue, args)
+        new(klass_name, path_name, queue, args)
       end
 
     end

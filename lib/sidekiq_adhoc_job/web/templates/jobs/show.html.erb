@@ -2,7 +2,7 @@
 
 <form method="POST" action="<%= root_path %>adhoc-jobs/<%= URI.escape(@presented_job.path_name) %>/schedule">
   <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
-  <% if @presented_job.args.empty? %>
+  <% if @presented_job.args.empty? && !@presented_job.has_rest_args %>
     <p>No job arguments</p>
   <% else %>
     <% @presented_job.required_args.each do |arg| %>
@@ -18,6 +18,14 @@
         <label class="col-sm-2 col-form-label" for="<%= arg %>"><%= arg %>:</label>
         <div class="col-sm-4">
           <input class="form-control" type="text" name="<%= arg %>" id="<%= arg %>"/>
+        </div>
+      </div>
+    <% end %>
+    <% if @presented_job.has_rest_args %>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="rest_args">*Rest arguments (please separate each argument by comma):</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="rest_args" id="rest_args" required/>
         </div>
       </div>
     <% end %>

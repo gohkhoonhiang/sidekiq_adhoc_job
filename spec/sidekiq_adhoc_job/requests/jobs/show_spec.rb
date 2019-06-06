@@ -8,7 +8,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
   context 'has arguments' do
     it 'generates form for running job' do
-      get '/adhoc-jobs/dummy_worker'
+      get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker'
 
       expect(last_response.status).to eq 200
 
@@ -16,7 +16,7 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
       expect(response_body).to include(compact_html(
         <<~HTML
-        <form method="POST" action="/adhoc-jobs/dummy_worker/schedule">
+        <form method="POST" action="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker/schedule">
         HTML
       ))
 
@@ -62,9 +62,9 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
     end
   end
 
-  context 'no argument' do
+  context 'has rest args' do
     it 'generates form for running job' do
-      get '/adhoc-jobs/dummy_no_arg_worker'
+      get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_rest_args_worker'
 
       expect(last_response.status).to eq 200
 
@@ -72,7 +72,45 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
 
       expect(response_body).to include(compact_html(
         <<~HTML
-        <form method="POST" action="/adhoc-jobs/dummy_no_arg_worker/schedule">
+        <form method="POST" action="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_rest_args_worker/schedule">
+        HTML
+      ))
+
+      expect(response_body).to include(compact_html(
+        <<~HTML
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="id">*id:</label>
+          <div class="col-sm-4">
+            <input class="form-control" type="text" name="id" id="id" required/>
+          </div>
+        </div>
+        HTML
+      ))
+
+      expect(response_body).to include(compact_html(
+        <<~HTML
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="rest_args">*Rest arguments (please separate each argument by comma):</label>
+          <div class="col-sm-4">
+            <input class="form-control" type="text" name="rest_args" id="rest_args" required/>
+          </div>
+        </div>
+        HTML
+      ))
+    end
+  end
+
+  context 'no argument' do
+    it 'generates form for running job' do
+      get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_no_arg_worker'
+
+      expect(last_response.status).to eq 200
+
+      response_body = compact_html(last_response.body)
+
+      expect(response_body).to include(compact_html(
+        <<~HTML
+        <form method="POST" action="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_no_arg_worker/schedule">
         HTML
       ))
 
