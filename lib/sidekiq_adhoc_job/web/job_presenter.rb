@@ -4,7 +4,7 @@ module SidekiqAdhocJob
     class JobPresenter
       include Sidekiq::WebHelpers
 
-      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :has_rest_args, :args
+      attr_reader :name, :path_name, :queue, :has_rest_args, :args
 
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
