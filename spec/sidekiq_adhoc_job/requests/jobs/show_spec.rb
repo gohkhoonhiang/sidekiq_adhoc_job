@@ -34,27 +34,22 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
             <input class="form-control" type="text" name="overwrite" id="overwrite" required/>
           </div>
         </div>
-        HTML
-      ))
-
-      expect(response_body).to include(compact_html(
-        <<~HTML
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="retry_job">retry_job:</label>
+          <label class="col-sm-2 col-form-label" for="retry_job">*retry_job:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="retry_job" id="retry_job"/>
+            <input class="form-control" type="text" name="retry_job" id="retry_job" required/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="retries">retries:</label>
+          <label class="col-sm-2 col-form-label" for="retries">*retries:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="retries" id="retries"/>
+            <input class="form-control" type="text" name="retries" id="retries" required/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="interval">interval:</label>
+          <label class="col-sm-2 col-form-label" for="interval">*interval:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="interval" id="interval"/>
+            <input class="form-control" type="text" name="interval" id="interval" required/>
           </div>
         </div>
         HTML
