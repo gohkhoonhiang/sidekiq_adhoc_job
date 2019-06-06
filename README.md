@@ -2,6 +2,10 @@
 
 This is an extension to the Sidekiq Web UI, which allows triggering jobs on adhoc basis.
 
+## Build Information
+
+[![Build Status](https://travis-ci.org/gohkhoonhiang/sidekiq_adhoc_job.svg?branch=master)](https://travis-ci.org/gohkhoonhiang/sidekiq_adhoc_job)
+
 ## Installation
 
 ```
