@@ -40,8 +40,8 @@ module SidekiqAdhocJob
       def self.convert_klass_name_to_presenter(path_name, klass_name)
         klass_obj = klass_name.new
         queue = klass_name.sidekiq_options['queue']
-        args = klass_obj
-               .method(:perform)
+        klass_method = klass_method(klass_obj.method(:perform))
+        args = klass_method
                .parameters
                .group_by { |type, _| type }
                .inject({}) do |acc, (type, params)|
@@ -49,6 +49,12 @@ module SidekiqAdhocJob
                  acc
                end
         new(klass_name, path_name, queue, args)
+      end
+
+      def self.klass_method(method)
+        return method unless method.super_method
+
+        klass_method(method.super_method)
       end
 
     end
