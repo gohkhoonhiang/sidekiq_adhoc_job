@@ -82,10 +82,14 @@ module SidekiqAdhocJob
           true
         elsif input == 'false'
           false
+        elsif input == 'nil'
+          nil
         elsif (i = parse_integer(input))
           i
         elsif (f = parse_float(input))
           f
+        elsif (j = parse_json(input))
+          j
         else
           input
         end
@@ -100,6 +104,12 @@ module SidekiqAdhocJob
       def self.parse_float(input)
         Float(input)
       rescue ArgumentError => _e
+        nil
+      end
+
+      def self.parse_json(input)
+        JSON.parse(input)
+      rescue JSON::ParserError => _e
         nil
       end
 

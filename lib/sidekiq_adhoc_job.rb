@@ -2,6 +2,7 @@ require 'sidekiq'
 require 'sidekiq/web'
 
 require 'sidekiq_adhoc_job/utils/string'
+require 'sidekiq_adhoc_job/utils/class_inspector'
 require 'sidekiq_adhoc_job/worker_classes_loader'
 require 'sidekiq_adhoc_job/web/job_presenter'
 require 'sidekiq_adhoc_job/services/schedule_adhoc_job'

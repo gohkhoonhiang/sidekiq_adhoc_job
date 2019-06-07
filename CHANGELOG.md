@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.4
+
+- Fix parameters inference for workers with prepended modules
+  - Create a separate class inspector util that recursively gets super class method parameters
+- Add support for `nil` and JSON string parsing
+
 ## 0.1.3
 
 - Fix adhoc job trigger form to take all arguments as required input

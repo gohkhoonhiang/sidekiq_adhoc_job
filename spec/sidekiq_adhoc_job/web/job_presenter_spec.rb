@@ -8,7 +8,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
   describe '.build_collection' do
     it 'returns all available job presenters' do
       job_presenters = subject.build_collection
-      expect(job_presenters.count).to eq 5
+      expect(job_presenters.count).to eq 7
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::DummyWorker
         expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_dummy_worker'
         expect(job_presenter.queue).to eq 'dummy'
-        expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval)
+        expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval name options)
         expect(job_presenter.has_rest_args).to eq false
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_namespaced_worker')
@@ -42,6 +42,20 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.queue).to eq 'dummy'
         expect(job_presenter.args).to eq %i(id)
         expect(job_presenter.has_rest_args).to eq true
+
+        job_presenter = subject.find('sidekiq_adhoc_job_test_prepended_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::PrependedWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_prepended_worker'
+        expect(job_presenter.queue).to eq 'dummy'
+        expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval)
+        expect(job_presenter.has_rest_args).to eq false
+
+        job_presenter = subject.find('sidekiq_adhoc_job_test_nested_prepended_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NestedPrependedWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_nested_prepended_worker'
+        expect(job_presenter.queue).to eq 'dummy'
+        expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval)
+        expect(job_presenter.has_rest_args).to eq false
       end
     end
 
