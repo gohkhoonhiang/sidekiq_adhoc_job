@@ -52,6 +52,18 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
             <input class="form-control" type="text" name="interval" id="interval" required/>
           </div>
         </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="name">*name:</label>
+          <div class="col-sm-4">
+            <input class="form-control" type="text" name="name" id="name" required/>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="options">*options:</label>
+          <div class="col-sm-4">
+            <input class="form-control" type="text" name="options" id="options" required/>
+          </div>
+        </div>
         HTML
       ))
     end
