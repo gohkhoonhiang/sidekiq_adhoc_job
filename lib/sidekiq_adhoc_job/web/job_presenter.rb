@@ -38,23 +38,10 @@ module SidekiqAdhocJob
       end
 
       def self.convert_klass_name_to_presenter(path_name, klass_name)
-        klass_obj = klass_name.new
         queue = klass_name.sidekiq_options['queue']
-        klass_method = klass_method(klass_obj.method(:perform))
-        args = klass_method
-               .parameters
-               .group_by { |type, _| type }
-               .inject({}) do |acc, (type, params)|
-                 acc[type] = params.map(&:last)
-                 acc
-               end
+        class_inspector = SidekiqAdhocJob::Utils::ClassInspector.new(klass_name)
+        args = class_inspector.parameters(:perform)
         new(klass_name, path_name, queue, args)
-      end
-
-      def self.klass_method(method)
-        return method unless method.super_method
-
-        klass_method(method.super_method)
       end
 
     end
