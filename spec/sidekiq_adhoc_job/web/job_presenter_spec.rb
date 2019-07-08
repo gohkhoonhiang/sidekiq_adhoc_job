@@ -8,7 +8,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
   describe '.build_collection' do
     it 'returns all available job presenters' do
       job_presenters = subject.build_collection
-      expect(job_presenters.count).to eq 7
+      expect(job_presenters.count).to eq 9
     end
   end
 
@@ -55,6 +55,20 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_nested_prepended_worker'
         expect(job_presenter.queue).to eq 'dummy'
         expect(job_presenter.args).to eq %i(id overwrite retry_job retries interval)
+        expect(job_presenter.has_rest_args).to eq false
+
+        job_presenter = subject.find('sidekiq_adhoc_job_test_sample_csv_worker')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::SampleCSVWorker
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_sample_csv_worker'
+        expect(job_presenter.queue).to eq 'dummy'
+        expect(job_presenter.args).to eq %i()
+        expect(job_presenter.has_rest_args).to eq false
+
+        job_presenter = subject.find('sidekiq_adhoc_job_test_non_explicit')
+        expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NonExplicit
+        expect(job_presenter.path_name).to eq 'sidekiq_adhoc_job_test_non_explicit'
+        expect(job_presenter.queue).to eq 'dummy'
+        expect(job_presenter.args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
       end
     end

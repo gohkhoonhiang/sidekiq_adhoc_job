@@ -1,9 +1,6 @@
 module SidekiqAdhocJob
   class WorkerClassesLoader
 
-    VALID_QUALIFIED_CLASS_NAME ||= /\A(([A-Z]{1}[a-z]+)(::)*)+\z/
-    VALID_WORKER_CLASS_NAME ||= /^.+[^(::)]+Worker$/
-
     StringUtil ||= Utils::String
 
     @_worker_klasses = {}
@@ -27,7 +24,6 @@ module SidekiqAdhocJob
 
     def self.load_workers(parent_module_const, module_sym, workers)
       qualified_name = module_sym.to_s
-      return unless VALID_QUALIFIED_CLASS_NAME.match?(qualified_name)
 
       module_const = begin
                        StringUtil.constantize(qualified_name)
@@ -41,7 +37,7 @@ module SidekiqAdhocJob
                      end
       return unless module_const && module_const.is_a?(Class)
 
-      if VALID_WORKER_CLASS_NAME.match?(qualified_name)
+      if module_const.include?(Sidekiq::Worker)
         path_name = StringUtil.underscore(qualified_name).gsub('/', '_')
         workers[path_name] = module_const
         return
