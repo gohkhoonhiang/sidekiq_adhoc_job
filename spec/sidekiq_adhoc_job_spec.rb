@@ -51,7 +51,9 @@ RSpec.describe SidekiqAdhocJob do
             SidekiqAdhocJob::Test::NamespacedWorker,
             SidekiqAdhocJob::Test::NestedPrependedWorker,
             SidekiqAdhocJob::Test::PrependedWorker,
-            SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker
+            SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker,
+            SidekiqAdhocJob::Test::SampleCSVWorker,
+            SidekiqAdhocJob::Test::NonExplicit
           ]
         )
       end
