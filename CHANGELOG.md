@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.1.5
+
+- Fix worker class loading to check for included module `Sidekiq::Worker`, instead of relying on regex match on the class name
+  - Now it can detect class names containing all capital letters, eg. `CSVWorker`
+  - Now it doesn't need to rely on the class names containing `Worker` suffix
+  - Now it doesn't wrongly load a class whose name ends with `Worker`, but isn't actually a Sidekiq worker
+
 ## 0.1.4
 
 - Fix parameters inference for workers with prepended modules
