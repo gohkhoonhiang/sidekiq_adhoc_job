@@ -1,4 +1,5 @@
 # References: https://github.com/hanami/utils/blob/master/lib/hanami/utils/string.rb
+#             https://github.com/omniauth/omniauth/blob/cc0f5522621b4a372f4dff0aa608822aa082cb60/lib/omniauth.rb#L156
 module SidekiqAdhocJob
   module Utils
     class String
@@ -75,7 +76,15 @@ module SidekiqAdhocJob
         constant
       end
 
-      def self.parse(input)
+      def self.camelize(word, first_letter_in_uppercase = true)
+        if first_letter_in_uppercase
+          word.to_s.gsub(%r{/(.?)}) { '::' + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
+        else
+          word.first + self.camelize(word)[1..-1]
+        end
+      end
+
+      def self.parse(input, symbolize: false)
         return unless input
 
         if input == 'true'
@@ -88,7 +97,7 @@ module SidekiqAdhocJob
           i
         elsif (f = parse_float(input))
           f
-        elsif (j = parse_json(input))
+        elsif (j = parse_json(input, symbolize: symbolize))
           j
         else
           input
@@ -107,8 +116,8 @@ module SidekiqAdhocJob
         nil
       end
 
-      def self.parse_json(input)
-        JSON.parse(input)
+      def self.parse_json(input, symbolize: false)
+        JSON.parse(input, symbolize_names: symbolize)
       rescue JSON::ParserError => _e
         nil
       end

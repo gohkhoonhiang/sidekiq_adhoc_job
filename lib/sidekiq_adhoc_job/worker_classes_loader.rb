@@ -2,12 +2,10 @@ module SidekiqAdhocJob
   class WorkerClassesLoader
     @_worker_klasses = {}
 
-    def self.load(module_names)
-      ObjectSpace.each_object(Class).each do |klass|
-        if worker_class?(klass) && allowed_namespace?(klass.name, allowlist: module_names)
-          @_worker_klasses[worker_path_name(klass.name)] = klass
-        end
-      end
+    def self.load(module_names, strategy:, load_paths:)
+      require_files(load_paths)
+      strategy.load
+      @_worker_klasses = strategy.worker_klasses
     end
 
     def self.worker_klasses
@@ -18,21 +16,8 @@ module SidekiqAdhocJob
       @_worker_klasses[path_name]
     end
 
-    def self.worker_class?(klass)
-      klass.included_modules.include?(Sidekiq::Worker)
+    def self.require_files(load_paths)
+      Dir[File.join("", load_paths)].each { |path| require path } unless load_paths.empty?
     end
-    private_class_method :worker_class?
-
-    def self.allowed_namespace?(class_name, allowlist:)
-      return true if allowlist.empty? || allowlist.include?('Module') # allow any namespace
-
-      allowlist.any? { |prefix| class_name.start_with?(prefix) }
-    end
-    private_class_method :allowed_namespace?
-
-    def self.worker_path_name(worker_name)
-      Utils::String.underscore(worker_name).gsub('/', '_')
-    end
-    private_class_method :worker_path_name
   end
 end

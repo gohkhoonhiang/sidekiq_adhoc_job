@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack-test', '~> 1.1.0'
   spec.add_development_dependency 'mock_redis', '~> 0.20.0'
 
-  spec.add_runtime_dependency 'sidekiq', '~> 5.2.7'
+  spec.add_runtime_dependency 'sidekiq', '>= 5.2.7'
 end

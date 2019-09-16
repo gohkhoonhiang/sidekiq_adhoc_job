@@ -16,7 +16,7 @@ module SidekiqAdhocJob
     end
 
     def call
-      worker_klass.perform_async(*worker_params)
+      SidekiqAdhocJob.config.strategy.perform_async(worker_klass, *worker_params)
     end
 
     private
@@ -25,9 +25,9 @@ module SidekiqAdhocJob
                 :allowed_params, :worker_params
 
     def parse_params
-      @worker_params = allowed_params.map { |key| StringUtil.parse(request_params[key]) }
+      @worker_params = allowed_params.map { |key| StringUtil.parse(request_params[key], symbolize: true) }
       if !!request_params[:rest_args] && !request_params[:rest_args].empty?
-        @worker_params += request_params[:rest_args].split(',').map { |arg| StringUtil.parse(arg.strip) }
+        @worker_params << StringUtil.parse_json(request_params[:rest_args].strip, symbolize: true)
       end
     end
 

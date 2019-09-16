@@ -12,7 +12,7 @@ RSpec.describe SidekiqAdhocJob::ScheduleAdhocJob do
     it 'schedules job to run asynchronously' do
       scheduler = subject.new(job_name, params)
 
-      expect(SidekiqAdhocJob::Test::DummyWorker).to receive(:perform_async).with('a937de5f-c86a-4f49-9243-d1c3bad2488f', true, true, 10, 2.5, nil, { 'skip_check' => true })
+      expect(SidekiqAdhocJob::Test::DummyWorker).to receive(:perform_async).with('a937de5f-c86a-4f49-9243-d1c3bad2488f', true, true, 10, 2.5, nil, { skip_check: true })
       scheduler.call
     end
   end
