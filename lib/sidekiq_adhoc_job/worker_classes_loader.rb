@@ -1,48 +1,42 @@
 module SidekiqAdhocJob
   class WorkerClassesLoader
-
-    StringUtil ||= Utils::String
-
     @_worker_klasses = {}
 
-    def self.load(module_names)
-      module_consts = module_names.map { |name| StringUtil.constantize(name.to_s) }
-      module_consts.each do |module_const|
-        module_const.constants.each do |sub_module_const_sym|
-          load_workers(module_const, sub_module_const_sym, @_worker_klasses)
+    module ClassMethods
+      def load(module_parent_names)
+        ObjectSpace.each_object(Class).each do |klass|
+          if worker_class?(klass) && match_module_parent_name?(klass.name, allowlist: module_parent_names)
+            @_worker_klasses[worker_path_name(klass.name)] = klass
+          end
         end
       end
-    end
 
-    def self.worker_klasses
-      @_worker_klasses
-    end
-
-    def self.find_worker_klass(path_name)
-      @_worker_klasses[path_name]
-    end
-
-    def self.load_workers(parent_module_const, module_sym, workers)
-      qualified_name = module_sym.to_s
-
-      module_const = begin
-                       StringUtil.constantize(qualified_name)
-                     rescue NameError => _e
-                       qualified_name = [parent_module_const, module_sym].compact.join('::')
-                       begin
-                         StringUtil.constantize(qualified_name)
-                       rescue NameError => _e
-                         nil
-                       end
-                     end
-      return unless module_const && module_const.is_a?(Class)
-
-      if module_const.include?(Sidekiq::Worker)
-        path_name = StringUtil.underscore(qualified_name).gsub('/', '_')
-        workers[path_name] = module_const
-        return
+      def worker_klasses
+        @_worker_klasses
       end
-    end
 
+      def find_worker_klass(path_name)
+        @_worker_klasses[path_name]
+      end
+
+      private
+
+        def worker_class?(klass)
+          klass.included_modules.include?(Sidekiq::Worker)
+        end
+
+        def match_module_parent_name?(class_name, allowlist:)
+          allowed_parent_names = allowlist.map(&:to_s)
+
+          return true if allowed_parent_names.empty? || allowed_parent_names.include?("Module")
+
+          allowed_parent_names.any? { |prefix| class_name.start_with?(prefix) }
+        end
+
+        def worker_path_name(worker_name)
+          Utils::String.underscore(worker_name).gsub('/', '_')
+        end
+    end
+    extend ClassMethods
   end
 end
