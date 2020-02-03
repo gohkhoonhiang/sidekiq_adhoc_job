@@ -24,12 +24,9 @@ module SidekiqAdhocJob
     private_class_method :worker_class?
 
     def self.allowed_namespace?(class_name, allowlist:)
-      allowed_namespaces = allowlist.map(&:to_s)
+      return true if allowlist.empty? || allowlist.include?('Module') # allow any namespace
 
-      # allow any workers
-      return true if allowed_namespaces.empty? || allowed_namespaces.include?('Module')
-
-      allowed_namespaces.any? { |prefix| class_name.start_with?(prefix) }
+      allowlist.any? { |prefix| class_name.start_with?(prefix) }
     end
     private_class_method :allowed_namespace?
 

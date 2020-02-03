@@ -41,6 +41,10 @@ module SidekiqAdhocJob
     def configured?
       !@module_names.empty?
     end
+
+    def module_names
+      Array(@module_names).map(&:to_s)
+    end
   end
 
 end
