@@ -29,7 +29,7 @@ module SidekiqAdhocJob
           allowed_parent_names = allowlist.map(&:to_s)
 
           # allow any workers
-          return true if allowed_parent_names.empty? || allowed_parent_names.include?("Module")
+          return true if allowed_parent_names.empty? || allowed_parent_names.include?('Module')
 
           allowed_parent_names.any? { |prefix| class_name.start_with?(prefix) }
         end
