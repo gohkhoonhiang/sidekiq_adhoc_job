@@ -27,6 +27,4 @@ SidekiqAdhocJob.init
 
 Options:
 
-- `module_names`: takes in a list of module names that include the worker classes to be loaded, required
-
-Without first configuring, it will raise `SidekiqAdhocJob::InvalidConfigurationError` when `SidekiqAdhocJob.init` is called.
+- `module_names`: takes in a list of module names that include the worker classes to be loaded. When not provided, or an empty list is provided, *ALL* worker classes loaded by your app will be included.

@@ -26,12 +26,6 @@ RSpec.describe SidekiqAdhocJob do
   end
 
   describe '.init' do
-    context 'without configure first' do
-      it 'raises error' do
-        expect { subject.init }.to raise_error(SidekiqAdhocJob::InvalidConfigurationError)
-      end
-    end
-
     context 'configure first' do
       it 'loads worker files and adds web extension' do
         subject.configure do |config|

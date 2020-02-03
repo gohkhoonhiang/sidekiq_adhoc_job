@@ -10,8 +10,6 @@ require 'sidekiq_adhoc_job/web'
 
 module SidekiqAdhocJob
 
-  InvalidConfigurationError ||= Class.new(RuntimeError)
-
   def self.configure
     @_config = Configuration.new
     yield @_config
@@ -22,8 +20,6 @@ module SidekiqAdhocJob
   end
 
   def self.init
-    raise InvalidConfigurationError, 'Must configure before init' unless @_config&.configured?
-
     SidekiqAdhocJob::WorkerClassesLoader.load(@_config.module_names)
 
     Sidekiq::Web.register(SidekiqAdhocJob::Web)
