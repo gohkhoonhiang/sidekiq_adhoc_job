@@ -52,7 +52,7 @@ RSpec.describe SidekiqAdhocJob do
         )
       end
 
-      it 'transforms module names properly' do
+      it 'formats module names properly' do
         subject.configure do |config|
           config.module_names = [:'SidekiqAdhocJob::Test', :'SidekiqAdhocJob::OtherTest', :'SidekiqAdhocJob::Test::Worker']
         end
