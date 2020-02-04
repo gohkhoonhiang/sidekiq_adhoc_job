@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.6
+
+- Improve worker class loading so that it doesn't display deprecation warning (eg. `warning: constant ::Fixnum is deprecated`) when using Ruby 2.6
+- Updated configuration options:
+  - `module_names` is no longer required.
+
 ## 0.1.5
 
 - Fix worker class loading to check for included module `Sidekiq::Worker`, instead of relying on regex match on the class name

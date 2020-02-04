@@ -25,6 +25,15 @@ end
 SidekiqAdhocJob.init
 ```
 
+or if no module names to whitelist:
+
+```ruby
+require 'sidekiq_adhoc_job'
+
+SidekiqAdhocJob.configure {}
+SidekiqAdhocJob.init
+```
+
 Options:
 
 - `module_names`: takes in a list of module names that include the worker classes to be loaded. When not provided, or an empty list is provided, *ALL* worker classes loaded by your app will be included.
