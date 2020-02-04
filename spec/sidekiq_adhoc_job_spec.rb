@@ -26,12 +26,6 @@ RSpec.describe SidekiqAdhocJob do
   end
 
   describe '.init' do
-    context 'without configure first' do
-      it 'raises error' do
-        expect { subject.init }.to raise_error(SidekiqAdhocJob::InvalidConfigurationError)
-      end
-    end
-
     context 'configure first' do
       it 'loads worker files and adds web extension' do
         subject.configure do |config|
@@ -56,6 +50,18 @@ RSpec.describe SidekiqAdhocJob do
             SidekiqAdhocJob::Test::NonExplicit
           ]
         )
+      end
+
+      it 'formats module names properly' do
+        subject.configure do |config|
+          config.module_names = [:'SidekiqAdhocJob::Test', :'SidekiqAdhocJob::OtherTest', :'SidekiqAdhocJob::Test::Worker']
+        end
+
+        expect(subject.config.module_names).to eq [
+          'SidekiqAdhocJob::Test',
+          'SidekiqAdhocJob::OtherTest',
+          'SidekiqAdhocJob::Test::Worker'
+        ]
       end
     end
   end
