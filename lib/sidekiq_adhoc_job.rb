@@ -34,10 +34,6 @@ module SidekiqAdhocJob
       @module_names = []
     end
 
-    def configured?
-      !@module_names.empty?
-    end
-
     def module_names
       Array(@module_names).map(&:to_s)
     end
