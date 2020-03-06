@@ -1,6 +1,6 @@
 module SidekiqAdhocJob
   module Strategies
-    class Rails
+    class ActiveJob
       include SidekiqAdhocJob::Strategy
 
       def worker_class?(klass)

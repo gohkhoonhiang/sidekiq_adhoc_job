@@ -14,8 +14,8 @@ module SidekiqAdhocJob
   StringUtil ||= Utils::String
 
   module Strategies
-    autoload :Rack, 'sidekiq_adhoc_job/strategies/rack'
-    autoload :Rails, 'sidekiq_adhoc_job/strategies/rails'
+    autoload :Default, 'sidekiq_adhoc_job/strategies/default'
+    autoload :ActiveJob, 'sidekiq_adhoc_job/strategies/active_job'
   end
 
   def self.configure
@@ -45,7 +45,7 @@ module SidekiqAdhocJob
     def initialize
       @load_paths = []
       @module_names = []
-      @strategy_name = :rack
+      @strategy_name = :default
     end
 
     def module_names
@@ -54,8 +54,8 @@ module SidekiqAdhocJob
 
     def strategy
       @strategy ||= case strategy_name
-                    when :rack
-                      SidekiqAdhocJob::Strategies::Rack.new(module_names)
+                    when :default
+                      SidekiqAdhocJob::Strategies::Default.new(module_names)
                     else
                       strategy_klass = SidekiqAdhocJob::Strategies.const_get(StringUtil.camelize(strategy_name.to_s).to_s)
                       raise InvalidConfigurationError, "Invalid strategy name" unless strategy_klass

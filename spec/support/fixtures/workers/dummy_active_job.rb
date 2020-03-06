@@ -3,7 +3,7 @@ module ActiveJob
 end
 
 module SidekiqAdhocJob
-  module RailsTest
+  module ActiveJobTest
     class DummyActiveJob < ActiveJob::Base
     end
   end

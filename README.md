@@ -21,7 +21,7 @@ require 'sidekiq_adhoc_job'
 
 SidekiqAdhocJob.configure do |config|
   config.module_names = ['YourProject::Worker']
-  config.strategy_name = :rails
+  config.strategy_name = :active_job
   config.load_paths = ['app/jobs/**/*.rb']
 end
 SidekiqAdhocJob.init
@@ -31,6 +31,6 @@ Options:
 
 - `module_names` (optional): takes in a list of module names that include the worker classes to be loaded. When not provided, or an empty list is provided, *ALL* worker classes loaded by your app will be included.
 - `strategy_name` (optional): takes a symbol representing the strategy to use to load worker classes
-  - `rack` (default): check for all classes that include `Sidekiq::Worker`
-  - `rails`: check for all classes that extend `ActiveJob::Base`
+  - `default` (default): check for all classes that include `Sidekiq::Worker`
+  - `active_job`: check for all classes that extend `ActiveJob::Base`
 - `load_paths` (required): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`

@@ -1,6 +1,6 @@
 module SidekiqAdhocJob
   module Strategies
-    class Rack
+    class Default
       include SidekiqAdhocJob::Strategy
 
       def worker_class?(klass)
