@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.2.0
+## 0.2.1
 
 - Support ActiveJob worker classes loading.
 - Add configuration option for `load_paths` to specify worker class files loading.
@@ -8,6 +8,8 @@
 - Minor updates to adhoc job schedule web UI:
   - Display worker class name.
   - Detailed description for rest arguments input.
+
+## 0.2.0 (Bad release)
 
 ## 0.1.6
 
