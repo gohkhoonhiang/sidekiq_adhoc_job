@@ -38,7 +38,7 @@ module SidekiqAdhocJob
       end
 
       def self.convert_klass_name_to_presenter(path_name, klass_name)
-        queue = klass_name.sidekiq_options['queue']
+        queue = SidekiqAdhocJob.config.strategy.get_queue_name(klass_name)
         class_inspector = SidekiqAdhocJob::Utils::ClassInspector.new(klass_name)
         args = class_inspector.parameters(:perform)
         new(klass_name, path_name, queue, args)

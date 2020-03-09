@@ -1,5 +1,7 @@
 <h3><%= t('adhoc_jobs') %></h3>
 
+<h4><%= SidekiqAdhocJob::Utils::String.classify(@presented_job.path_name) %></h4>
+
 <form method="POST" action="<%= root_path %>adhoc-jobs/<%= URI.escape(@presented_job.path_name) %>/schedule">
   <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
   <% if @presented_job.args.empty? && !@presented_job.has_rest_args %>
@@ -15,7 +17,7 @@
     <% end %>
     <% if @presented_job.has_rest_args %>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="rest_args">*Rest arguments (please separate each argument by comma):</label>
+        <label class="col-sm-2 col-form-label" for="rest_args">*Rest arguments (please provide a json string representing the arguments):</label>
         <div class="col-sm-4">
           <input class="form-control" type="text" name="rest_args" id="rest_args" required/>
         </div>

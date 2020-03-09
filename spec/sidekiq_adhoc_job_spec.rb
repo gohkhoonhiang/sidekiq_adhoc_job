@@ -64,5 +64,24 @@ RSpec.describe SidekiqAdhocJob do
         ]
       end
     end
+
+    context 'different strategy: active_job' do
+      it 'loads worker files and adds web extension' do
+        subject.configure do |config|
+          config.module_names = [:'SidekiqAdhocJob::ActiveJobTest']
+          config.strategy_name = :active_job
+        end
+
+        expect(Sidekiq::Web).to receive(:register).with(SidekiqAdhocJob::Web)
+
+        subject.init
+
+        expect(SidekiqAdhocJob::WorkerClassesLoader.worker_klasses.values).to match_array(
+          [
+            SidekiqAdhocJob::ActiveJobTest::DummyActiveJob
+          ]
+        )
+      end
+    end
   end
 end
