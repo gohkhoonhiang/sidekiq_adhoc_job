@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.2.0
+
+- Support ActiveJob worker classes loading.
+- Add configuration option for `load_paths` to specify worker class files loading.
+- Job params from the adhoc job schedule web UI are deep symbolized.
+- Minor updates to adhoc job schedule web UI:
+  - Display worker class name.
+  - Detailed description for rest arguments input.
+
 ## 0.1.6
 
 - Improve worker class loading so that it doesn't display deprecation warning (eg. `warning: constant ::Fixnum is deprecated`) when using Ruby 2.6
