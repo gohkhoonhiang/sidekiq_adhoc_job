@@ -35,33 +35,33 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="retry_job">*retry_job:</label>
+          <label class="col-sm-2 col-form-label" for="retry_job">retry_job:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="retry_job" id="retry_job" required/>
+            <input class="form-control" type="text" name="retry_job" id="retry_job"/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="retries">*retries:</label>
+          <label class="col-sm-2 col-form-label" for="retries">retries:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="retries" id="retries" required/>
+            <input class="form-control" type="text" name="retries" id="retries"/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="interval">*interval:</label>
+          <label class="col-sm-2 col-form-label" for="interval">interval:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="interval" id="interval" required/>
+            <input class="form-control" type="text" name="interval" id="interval"/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="name">*name:</label>
+          <label class="col-sm-2 col-form-label" for="name">name:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="name" id="name" required/>
+            <input class="form-control" type="text" name="name" id="name"/>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="options">*options:</label>
+          <label class="col-sm-2 col-form-label" for="options">options:</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="options" id="options" required/>
+            <input class="form-control" type="text" name="options" id="options"/>
           </div>
         </div>
         HTML

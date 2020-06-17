@@ -25,7 +25,9 @@ module SidekiqAdhocJob
                 :allowed_params, :worker_params
 
     def parse_params
-      @worker_params = allowed_params.map { |key| StringUtil.parse(request_params[key], symbolize: true) }
+      @worker_params = allowed_params
+        .reject { |key| request_params[key].empty? }
+        .map { |key| StringUtil.parse(request_params[key], symbolize: true) }
       if !!request_params[:rest_args] && !request_params[:rest_args].empty?
         @worker_params << StringUtil.parse_json(request_params[:rest_args].strip, symbolize: true)
       end
