@@ -34,3 +34,19 @@ Options:
   - `default` (default): check for all classes that include `Sidekiq::Worker`
   - `active_job`: check for all classes that extend `ActiveJob::Base`
 - `load_paths` (required): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
+
+## Web UI
+
+The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc_jobs`. A list of loaded jobs will be displayed in a table:
+- Job Name
+- Job Queue
+- Required Arguments
+- Optional Arguments
+- Has Rest Arguments
+- Actions
+
+To run a job, click `View Job`, then fill in the required parameters and optionally the optional parameters, then click `Run Job`.
+
+Empty values in the optional parameters will be ignored, and the default values specified in the worker will be used to run the job.
+
+Note: If the default value is non-empty, you will not be able to set an empty value to override the default, since an empty value will be ignored.

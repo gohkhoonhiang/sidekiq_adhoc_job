@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.2
+- Allow empty values for optional arguments in the web UI.
+  - If empty values are sent, do not pass them to the worker, so that default values will be used instead.
+  - Note: if the default value is non-empty, it's not possible to set an empty value.
+
 ## 0.2.1
 
 - Support ActiveJob worker classes loading.
