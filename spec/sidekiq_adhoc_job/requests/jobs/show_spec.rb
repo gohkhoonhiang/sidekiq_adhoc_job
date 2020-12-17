@@ -97,9 +97,9 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
       expect(response_body).to include(compact_html(
         <<~HTML
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="rest_args">*Rest arguments (please provide a json string representing the arguments):</label>
+          <label class="col-sm-2 col-form-label" for="rest_args">Rest arguments (please provide a json string representing the arguments):</label>
           <div class="col-sm-4">
-            <input class="form-control" type="text" name="rest_args" id="rest_args" required/>
+            <input class="form-control" type="text" name="rest_args" id="rest_args"/>
           </div>
         </div>
         HTML
