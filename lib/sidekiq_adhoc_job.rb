@@ -16,6 +16,7 @@ module SidekiqAdhocJob
   module Strategies
     autoload :Default, 'sidekiq_adhoc_job/strategies/default'
     autoload :ActiveJob, 'sidekiq_adhoc_job/strategies/active_job'
+    autoload :RailsApplicationJob, 'sidekiq_adhoc_job/strategies/rails_application_job'
   end
 
   def self.configure
