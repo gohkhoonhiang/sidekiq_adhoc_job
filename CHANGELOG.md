@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.3.0
+
+- Update dependency versions
+  - ruby: constraint to < 2.7.x, more work required to check for 2.7.x compatibility
+  - sidekiq: constraint to < 5, more work required to check for 6 compatibility
+  - rspec: update to latest 3.10.0
+  - mock_redis: update to latest 0.26.0
+- [Web UI] Temporarily remove required constraint for rest arguments.
+- [Rails] Support ApplicationJob strategy.
+
 ## 0.2.2
 - Allow empty values for optional arguments in the web UI.
   - If empty values are sent, do not pass them to the worker, so that default values will be used instead.
