@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.0 (Potential breaking change)
+
+- Update dependency versions
+  - sidekiq: constraint to < 7, supports Sidekiq 6
+
 ## 0.3.0
 
 - Update dependency versions
