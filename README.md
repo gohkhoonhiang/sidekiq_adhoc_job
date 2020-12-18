@@ -33,6 +33,7 @@ Options:
 - `strategy_name` (optional): takes a symbol representing the strategy to use to load worker classes
   - `default` (default): check for all classes that include `Sidekiq::Worker`
   - `active_job`: check for all classes that extend `ActiveJob::Base`
+  - `rails_application_job`: check for all classes that extend `ApplicationJob`
 - `load_paths` (required): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
 
 ## Web UI
@@ -50,3 +51,11 @@ To run a job, click `View Job`, then fill in the required parameters and optiona
 Empty values in the optional parameters will be ignored, and the default values specified in the worker will be used to run the job.
 
 Note: If the default value is non-empty, you will not be able to set an empty value to override the default, since an empty value will be ignored.
+
+For rest arguments, provide a JSON string containing the keyword arguments, eg.
+
+```json
+{ "user_id": "123-456-789" }
+```
+
+Note: There is no UI validation for the input, as the class inspector will not be able to infer what are the fields in the rest arguments list.
