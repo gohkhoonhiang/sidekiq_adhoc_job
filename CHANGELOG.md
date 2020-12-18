@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.1
+
+- Update README for new option for `strategy`.
+- Update README for usage of rest arguments in Web UI.
+
 ## 0.3.1
 
 - Update README for new option for `strategy`.
