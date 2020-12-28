@@ -22,7 +22,7 @@
           <td><%= job.optional_args.join(', ') %></td>
           <td><%= job.has_rest_args %></td>
           <td class="text-center">
-            <a class="btn btn-warn btn-xs" href="<%= root_path %>adhoc-jobs/<%= URI.escape(job.path_name) %>">
+            <a class="btn btn-warn btn-xs" href="<%= root_path %>adhoc-jobs/<%= CGI.escape(job.path_name) %>">
               <%= t('adhoc_jobs_view_job') %>
             </a>
           </td>
