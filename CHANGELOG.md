@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.0.pre (Potential breaking change)
+
+Prelease for v2.0.0.
+
+- Support Ruby 3.
+
 ## 1.0.1
 
 - Update README for new option for `strategy`.

@@ -1,3 +1,3 @@
 module SidekiqAdhocJob
-  VERSION = '1.0.1'.freeze
+  VERSION = '2.0.0.pre'.freeze
 end
