@@ -34,11 +34,11 @@ Options:
   - `default` (default): check for all classes that include `Sidekiq::Worker`
   - `active_job`: check for all classes that extend `ActiveJob::Base`
   - `rails_application_job`: check for all classes that extend `ApplicationJob`
-- `load_paths` (required): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
+- `load_paths` (optional - default `[]`): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
 
 ## Web UI
 
-The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc_jobs`. A list of loaded jobs will be displayed in a table:
+The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc-jobs`. A list of loaded jobs will be displayed in a table:
 - Job Name
 - Job Queue
 - Required Arguments
