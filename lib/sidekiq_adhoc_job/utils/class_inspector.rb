@@ -35,6 +35,14 @@ module SidekiqAdhocJob
         parameters(method_name)[:opt] || []
       end
 
+      def required_kw_parameters(method_name)
+        parameters(method_name)[:keyreq] || []
+      end
+
+      def optional_kw_parameters(method_name)
+        parameters(method_name)[:key] || []
+      end
+
       def has_rest_parameter?(method_name)
         !!parameters(method_name)[:rest]
       end
