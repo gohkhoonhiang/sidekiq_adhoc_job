@@ -11,8 +11,8 @@ module SidekiqAdhocJob
         klass_name.queue_name
       end
 
-      def perform_async(klass, *params)
-        klass.perform_later(*params)
+      def perform_async(klass, *params, **kw_params)
+        klass.perform_later(*params, **kw_params)
       end
     end
   end
