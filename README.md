@@ -36,6 +36,13 @@ Options:
   - `rails_application_job`: check for all classes that extend `ApplicationJob`
 - `load_paths` (optional - default `[]`): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
 
+### Keyword Arguments Support (>= v2.1.0)
+
+Not that only ActiveJob supports keyword arguments for #perform, because it does additional serialization work. Sidekiq::Worker by default does not.
+
+So even though SidekiqAdhocJob allows for displaying keyword arguments input in the Web UI,
+it will raise error when invoking the worker's #perform with the keyword arguments.
+
 ## Web UI
 
 The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc-jobs`. A list of loaded jobs will be displayed in a table:
@@ -43,6 +50,8 @@ The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc-jobs`. A lis
 - Job Queue
 - Required Arguments
 - Optional Arguments
+- Required Keyword Arguments
+- Optional Keyword Arguments
 - Has Rest Arguments
 - Actions
 

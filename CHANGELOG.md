@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.1.0
+
+- Support keyword arguments for ActiveJob#perform
+- Fix #perform parameters lookup when a job has prepended module and also inherits a class,
+  eg. ActiveJob implementations
+- Fix typos in README
+
 ## 2.0.0 (Potential breaking change)
 
 Official release.
