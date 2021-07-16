@@ -44,6 +44,7 @@ RSpec.describe SidekiqAdhocJob do
             SidekiqAdhocJob::Test::DummyWorker,
             SidekiqAdhocJob::Test::NamespacedWorker,
             SidekiqAdhocJob::Test::NestedPrependedWorker,
+            SidekiqAdhocJob::Test::PrependedAndInheritedWorker,
             SidekiqAdhocJob::Test::PrependedWorker,
             SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker,
             SidekiqAdhocJob::Test::SampleCSVWorker,

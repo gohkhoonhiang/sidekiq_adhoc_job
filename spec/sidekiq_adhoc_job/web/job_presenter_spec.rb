@@ -8,7 +8,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
   describe '.build_collection' do
     it 'returns all available job presenters' do
       job_presenters = subject.build_collection
-      expect(job_presenters.count).to eq 9
+      expect(job_presenters.count).to eq 10
     end
   end
 
