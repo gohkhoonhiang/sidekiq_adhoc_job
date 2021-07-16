@@ -8,6 +8,8 @@
         <th><%= t('adhoc_jobs_queue') %></th>
         <th><%= t('adhoc_jobs_required_arguments') %></th>
         <th><%= t('adhoc_jobs_optional_arguments') %></th>
+        <th><%= t('adhoc_jobs_required_keyword_arguments') %></th>
+        <th><%= t('adhoc_jobs_optional_keyword_arguments') %></th>
         <th><%= t('adhoc_jobs_has_rest_arguments') %></th>
         <th><%= t('adhoc_jobs_actions') %></th>
       </tr>
@@ -20,6 +22,8 @@
           <td><%= job.queue %></td>
           <td><%= job.required_args.join(', ') %></td>
           <td><%= job.optional_args.join(', ') %></td>
+          <td><%= job.required_kw_args.join(', ') %></td>
+          <td><%= job.optional_kw_args.join(', ') %></td>
           <td><%= job.has_rest_args %></td>
           <td class="text-center">
             <a class="btn btn-warn btn-xs" href="<%= root_path %>adhoc-jobs/<%= CGI.escape(job.path_name) %>">

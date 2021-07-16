@@ -4,7 +4,7 @@ module SidekiqAdhocJob
     class JobPresenter
       include Sidekiq::WebHelpers
 
-      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :has_rest_args
+      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :required_kw_args, :optional_kw_args, :has_rest_args
 
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
@@ -15,6 +15,8 @@ module SidekiqAdhocJob
         @queue = queue
         @required_args = args[:req] || []
         @optional_args = args[:opt] || []
+        @required_kw_args = args[:keyreq] || []
+        @optional_kw_args = args[:key] || []
         @has_rest_args = !!args[:rest]
       end
 
@@ -41,6 +43,10 @@ module SidekiqAdhocJob
         class_inspector = SidekiqAdhocJob::Utils::ClassInspector.new(klass_name)
         args = class_inspector.parameters(:perform)
         new(klass_name, path_name, queue, args)
+      end
+
+      def no_arguments?
+        required_args.empty? && optional_args.empty? && required_kw_args.empty? && optional_kw_args.empty? && !has_rest_args
       end
 
     end

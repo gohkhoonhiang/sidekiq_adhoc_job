@@ -4,7 +4,7 @@
 
 <form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule">
   <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
-  <% if @presented_job.required_args.empty? && @presented_job.optional_args.empty? && !@presented_job.has_rest_args %>
+  <% if @presented_job.no_arguments? %>
     <p>No job arguments</p>
   <% else %>
     <% @presented_job.required_args.each do |arg| %>
@@ -16,6 +16,22 @@
       </div>
     <% end %>
     <% @presented_job.optional_args.each do |arg| %>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="<%= arg %>"><%= arg %>:</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="<%= arg %>" id="<%= arg %>"/>
+        </div>
+      </div>
+    <% end %>
+    <% @presented_job.required_kw_args.each do |arg| %>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="<%= arg %>"><%= arg %>:</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="<%= arg %>" id="<%= arg %>" required/>
+        </div>
+      </div>
+    <% end %>
+    <% @presented_job.optional_kw_args.each do |arg| %>
       <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="<%= arg %>"><%= arg %>:</label>
         <div class="col-sm-4">
