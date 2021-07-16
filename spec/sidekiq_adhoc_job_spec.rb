@@ -1,4 +1,6 @@
+require 'rack/test'
 require_relative '../lib/sidekiq_adhoc_job'
+require_relative '../lib/sidekiq_adhoc_job/web/routes/jobs/show'
 
 RSpec.describe SidekiqAdhocJob do
 
@@ -101,6 +103,60 @@ RSpec.describe SidekiqAdhocJob do
             SidekiqAdhocJob::RailsApplicationJobTest::DummyApplicationJob
           ]
         )
+      end
+    end
+
+    context 'allow_override_params: false' do
+      include Rack::Test::Methods
+      include_context 'request setup'
+
+      before do
+        subject.configure do |config|
+          config.allow_override_params = false
+        end
+
+        subject.init
+      end
+
+      it 'does not render override params form'  do
+        get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker'
+
+        expect(last_response.status).to eq 200
+
+        response_body = compact_html(last_response.body)
+
+        expect(response_body).not_to include(compact_html(
+          <<~HTML
+          <p>Let me override all the arguments, I know what I'm doing.</p>
+          HTML
+        ))
+      end
+    end
+
+    context 'allow_override_params: true' do
+      include Rack::Test::Methods
+      include_context 'request setup'
+
+      before do
+        subject.configure do |config|
+          config.allow_override_params = true
+        end
+
+        subject.init
+      end
+
+      it 'renders override params form'  do
+        get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker'
+
+        expect(last_response.status).to eq 200
+
+        response_body = compact_html(last_response.body)
+
+        expect(response_body).to include(compact_html(
+          <<~HTML
+          <p>Let me override all the arguments, I know what I'm doing.</p>
+          HTML
+        ))
       end
     end
   end

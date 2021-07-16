@@ -2,37 +2,39 @@
 
 <h4><%= SidekiqAdhocJob::Utils::String.classify(@presented_job.path_name) %></h4>
 
-<p>Let me override all the arguments, I know what I'm doing.</p>
+<% if SidekiqAdhocJob.config.allow_override_params %>
+  <p>Let me override all the arguments, I know what I'm doing.</p>
 
-<form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule">
-  <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label" for="override_args">Let me override all the arguments, I know what I'm doing.</label><br>
-    <div class="col-sm-4">
-      <input class="form-control" type="text" name="override_args" id="override_args" placeholder="Type the exact phrase 'let_me_override'" />
+  <form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule">
+    <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="override_args">Let me override all the arguments, I know what I'm doing.</label><br>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="override_args" id="override_args" placeholder="Type the exact phrase: let_me_override" />
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label" for="posargs">Positional Args (please provide a json string representing the array of arguments):</label>
-    <div class="col-sm-4">
-      <input class="form-control" type="text" name="positional_args" id="posargs"/>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="posargs">Positional Args (please provide a json string representing the array of arguments):</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="positional_args" id="posargs"/>
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label" for="kwargs">Keyword Args (please provide a json string representing the hash of arguments):</label>
-    <div class="col-sm-4">
-      <input class="form-control" type="text" name="keyword_args" id="kwargs"/>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="kwargs">Keyword Args (please provide a json string representing the hash of arguments):</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="keyword_args" id="kwargs"/>
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-4">
-      <button type="submit" class="btn btn-danger"><%= t('adhoc_jobs_run_job') %></button>
-      <a class="btn" href="<%= root_path %>adhoc-jobs"><%= t('adhoc_jobs_go_back') %></a>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <button type="submit" class="btn btn-danger"><%= t('adhoc_jobs_run_job') %></button>
+        <a class="btn" href="<%= root_path %>adhoc-jobs"><%= t('adhoc_jobs_go_back') %></a>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 
-<hr>
+  <hr>
+<% end %>
 
 <form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule">
   <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />

@@ -41,12 +41,13 @@ module SidekiqAdhocJob
   end
 
   class Configuration
-    attr_accessor :load_paths, :module_names, :strategy_name
+    attr_accessor :load_paths, :module_names, :strategy_name, :allow_override_params
 
     def initialize
       @load_paths = []
       @module_names = []
       @strategy_name = :default
+      @allow_override_params = false
     end
 
     def module_names
