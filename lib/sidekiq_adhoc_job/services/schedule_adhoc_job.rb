@@ -4,14 +4,15 @@ module SidekiqAdhocJob
     StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
     def initialize(job_name, request_params)
-      @request_params = request_params.inject({}) do |acc, (k, v)|
-        acc[k.to_sym] = v
-        acc
-      end
+      @request_params = request_params.transform_keys(&:to_sym)
       @worker_klass = WorkerClassesLoader.find_worker_klass(job_name)
       @worker_klass_inspector = Utils::ClassInspector.new(worker_klass)
 
-      parse_params
+      if @request_params[:override_args] == 'let_me_override'
+        override_params
+      else
+        parse_params
+      end
     end
 
     def call
@@ -21,6 +22,11 @@ module SidekiqAdhocJob
     private
 
     attr_reader :request_params, :worker_klass, :worker_klass_inspector, :worker_positional_params, :worker_keyword_params
+
+    def override_params
+      @worker_positional_params = request_params[:positional_args].empty? ? [] : StringUtil.parse(request_params[:positional_args], symbolize: true)
+      @worker_keyword_params = request_params[:keyword_args].empty? ? {} : StringUtil.parse(request_params[:keyword_args], symbolize: true)
+    end
 
     def parse_params
       @worker_positional_params = positional_params
