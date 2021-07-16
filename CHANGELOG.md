@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.0 (Potential breaking change)
+
+Official release.
+
+- Support Ruby 3.
+
 ## 2.0.0.pre (Potential breaking change)
 
 Prelease for v2.0.0.
