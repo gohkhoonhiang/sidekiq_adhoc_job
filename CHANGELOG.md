@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.1
+
+- Sort job classes alphabetically in web view
+
 ## 2.1.0
 
 - Support keyword arguments for ActiveJob#perform
