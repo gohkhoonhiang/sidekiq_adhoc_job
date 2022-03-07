@@ -27,6 +27,10 @@ module SidekiqAdhocJob
         params
       end
 
+      def require_confirm?
+        klass_obj.methods.include?(:confirm) && klass_obj.confirm
+      end
+
       def required_parameters(method_name)
         parameters(method_name)[:req] || []
       end
