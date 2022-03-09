@@ -41,16 +41,21 @@ module SidekiqAdhocJob
   end
 
   class Configuration
-    attr_accessor :load_paths, :module_names, :strategy_name
+    attr_accessor :load_paths, :module_names, :strategy_name, :require_confirm_module_names
 
     def initialize
       @load_paths = []
       @module_names = []
+      @require_confirm = nil
       @strategy_name = :default
     end
 
     def module_names
       Array(@module_names).map(&:to_s)
+    end
+
+    def require_confirm
+      @require_confirm ||= Array(@require_confirm_module_names).map(&:to_s)
     end
 
     def strategy

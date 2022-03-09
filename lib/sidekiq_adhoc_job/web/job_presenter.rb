@@ -4,12 +4,20 @@ module SidekiqAdhocJob
     class JobPresenter
       include Sidekiq::WebHelpers
 
-      attr_reader :name, :path_name, :queue, :required_args, :optional_args, :required_kw_args, :optional_kw_args, :has_rest_args, :require_confirm
+      attr_reader :name,
+                  :path_name,
+                  :queue,
+                  :required_args,
+                  :optional_args,
+                  :required_kw_args,
+                  :optional_kw_args,
+                  :has_rest_args,
+                  :require_confirm
 
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
       # args: { req: [], opt: [] }
-      def initialize(name, path_name, queue, args, confirm)
+      def initialize(name, path_name, queue, args, require_confirm)
         @name = name
         @path_name = path_name
         @queue = queue
@@ -18,7 +26,7 @@ module SidekiqAdhocJob
         @required_kw_args = args[:keyreq] || []
         @optional_kw_args = args[:key] || []
         @has_rest_args = !!args[:rest]
-        @require_confirm = confirm
+        @require_confirm = require_confirm
       end
 
       # Builds the presenter instances for the schedule hash
@@ -43,8 +51,8 @@ module SidekiqAdhocJob
         queue = SidekiqAdhocJob.config.strategy.get_queue_name(klass_name)
         class_inspector = SidekiqAdhocJob::Utils::ClassInspector.new(klass_name)
         args = class_inspector.parameters(:perform)
-        confirm = class_inspector.require_confirm?
-        new(klass_name, path_name, queue, args, confirm)
+        require_confirm = SidekiqAdhocJob.config.require_confirm.include?(klass_name.to_s)
+        new(klass_name, path_name, queue, args, require_confirm)
       end
 
       def no_arguments?
