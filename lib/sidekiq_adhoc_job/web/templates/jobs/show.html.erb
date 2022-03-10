@@ -2,7 +2,7 @@
 
 <h4><%= SidekiqAdhocJob::Utils::String.classify(@presented_job.path_name) %></h4>
 
-<form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule" <%= 'id="confirm"' if @presented_job.require_confirm %> >
+<form method="POST" action="<%= root_path %>adhoc-jobs/<%= CGI.escape(@presented_job.path_name) %>/schedule" id="adhoc-jobs-submit-form">
   <input type="hidden" name="authenticity_token" value="<%= @csrf_token %>" />
   <% if @presented_job.no_arguments? %>
     <p>No job arguments</p>
@@ -56,9 +56,11 @@
   </div>
 </form>
 
-<script>
-  document.getElementById('confirm').addEventListener('submit', (event) => {
-    if (!confirm('Are you sure?'))
-      event.preventDefault();
-  })
-</script>
+<% if @presented_job.require_confirm %>
+  <script>
+    document.getElementById('adhoc-jobs-submit-form').addEventListener('submit', (event) => {
+      if (!confirm('Are you sure?'))
+        event.preventDefault();
+    })
+  </script>
+<% end %>
