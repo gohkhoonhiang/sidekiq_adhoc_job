@@ -35,6 +35,7 @@ Options:
   - `active_job`: check for all classes that extend `ActiveJob::Base`
   - `rails_application_job`: check for all classes that extend `ApplicationJob`
 - `load_paths` (optional - default `[]`): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
+- `require_confirm_worker_names` (optional - default `[]`): takes in a list of fully namespaced worker class names that the web UI will request for confirmation before running the job
 
 ### Keyword Arguments Support (>= v2.1.0)
 
@@ -53,7 +54,10 @@ The web UI is accessible via `#{root_url}/#{sidekiq_web_path}/adhoc-jobs`. A lis
 - Required Keyword Arguments
 - Optional Keyword Arguments
 - Has Rest Arguments
+- Confirm Required
 - Actions
+
+### Run Job
 
 To run a job, click `View Job`, then fill in the required parameters and optionally the optional parameters, then click `Run Job`.
 
@@ -68,3 +72,7 @@ For rest arguments, provide a JSON string containing the keyword arguments, eg.
 ```
 
 Note: There is no UI validation for the input, as the class inspector will not be able to infer what are the fields in the rest arguments list.
+
+### Require Confirmation
+
+If the `require_confirm_worker_names` option is configured with the worker class name of the job you want to run, it will prompt for confirmation. By clicking `OK`, the job will be scheduled to run; otherwise, it will not run. This helps to prevent accidentally running a critical job when not meant to be.

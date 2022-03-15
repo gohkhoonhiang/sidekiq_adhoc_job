@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.2.0
+
+- Add configuration option for `require_confirm_worker_names` to specify worker class names that require confirmation to run.
+
 ## 2.1.1
 
 - Sort job classes alphabetically in web view
