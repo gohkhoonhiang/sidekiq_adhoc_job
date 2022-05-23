@@ -24,7 +24,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i(type)
         expect(job_presenter.optional_kw_args).to eq %i(dryrun)
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq 'prompt'
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_namespaced_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NamespacedWorker
@@ -35,7 +35,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq true
+        expect(job_presenter.require_confirm).to eq 'confirm'
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_worker_nested_namespaced_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::Worker::NestedNamespacedWorker
@@ -46,7 +46,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq nil
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_dummy_rest_args_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::DummyRestArgsWorker
@@ -57,7 +57,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq true
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq nil
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_prepended_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::PrependedWorker
@@ -68,7 +68,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq nil
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_nested_prepended_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NestedPrependedWorker
@@ -79,7 +79,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq nil
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_sample_csv_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::SampleCSVWorker
@@ -90,7 +90,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq true
+        expect(job_presenter.require_confirm).to eq 'confirm'
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_non_explicit')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NonExplicit
@@ -101,7 +101,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i()
         expect(job_presenter.optional_kw_args).to eq %i()
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq nil
       end
     end
 

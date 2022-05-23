@@ -56,10 +56,18 @@
   </div>
 </form>
 
-<% if @presented_job.require_confirm %>
+<% if @presented_job.require_confirm == 'confirm' %>
   <script>
     document.getElementById('adhoc-jobs-submit-form').addEventListener('submit', (event) => {
       if (!confirm('Are you sure?'))
+        event.preventDefault();
+    })
+  </script>
+<% elsif @presented_job.require_confirm == 'prompt' %>
+  <script>
+    document.getElementById('adhoc-jobs-submit-form').addEventListener('submit', (event) => {
+      const confirmPrompt = "<%= @presented_job.confirm_prompt_message %>";
+      if (prompt(`Please enter "${confirmPrompt}" to confirm`) !== confirmPrompt)
         event.preventDefault();
     })
   </script>
