@@ -8,9 +8,6 @@ RSpec.shared_context 'SidekiqAdhocJob setup' do
         %w[
           SidekiqAdhocJob::Test::NamespacedWorker
           SidekiqAdhocJob::Test::SampleCSVWorker
-        ]
-      config.require_confirm_prompt_worker_names =
-        %w[
           SidekiqAdhocJob::Test::DummyWorker
         ]
     end

@@ -45,8 +45,7 @@ module SidekiqAdhocJob
                   :module_names,
                   :strategy_name,
                   :require_confirm_worker_names,
-                  :require_confirm_prompt_message,
-                  :require_confirm_prompt_worker_names
+                  :require_confirm_prompt_message
 
     def initialize
       @load_paths = []
@@ -62,16 +61,8 @@ module SidekiqAdhocJob
       @require_confirm ||= Array(@require_confirm_worker_names).map(&:to_s)
     end
 
-    def require_confirm_prompt
-      @require_confirm_prompt ||= Array(@require_confirm_prompt_worker_names).map(&:to_s)
-    end
-
-    def require_confirmation_type(worker_name)
-      if require_confirm.include?(worker_name)
-        'confirm'
-      elsif require_confirm_prompt.include?(worker_name)
-        'prompt'
-      end
+    def require_confirmation?(worker_name)
+      require_confirm.include?(worker_name)
     end
 
     def strategy
