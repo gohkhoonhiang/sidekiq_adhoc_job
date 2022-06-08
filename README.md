@@ -75,4 +75,4 @@ Note: There is no UI validation for the input, as the class inspector will not b
 
 ### Require Confirmation
 
-If the `require_confirm_worker_names` option is configured with the worker class name of the job you want to run, it will prompt for confirmation. By clicking `OK`, the job will be scheduled to run; otherwise, it will not run. This helps to prevent accidentally running a critical job when not meant to be.
+If the `require_confirm_worker_names` option is configured with the worker class name of the job you want to run, it will prompt for confirmation. You will be required to type a specific keyword for the job to run, otherwise, it will not run. This keyword is set to `confirm` by default and can be customized using `require_confirm_prompt_message` option. This helps to prevent accidentally running a critical job when not meant to be.

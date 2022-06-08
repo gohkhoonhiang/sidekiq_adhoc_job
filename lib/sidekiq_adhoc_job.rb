@@ -52,6 +52,7 @@ module SidekiqAdhocJob
       @load_paths = []
       @module_names = []
       @strategy_name = :default
+      @require_confirm_prompt_message = 'confirm'
     end
 
     def module_names
