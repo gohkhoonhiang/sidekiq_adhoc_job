@@ -16,6 +16,16 @@ RSpec.describe SidekiqAdhocJob do
     it 'yields configuration object' do
       expect { |blk| subject.configure(&blk) }.to yield_with_args(instance_of(SidekiqAdhocJob::Configuration))
     end
+
+    context 'when require_confirm_prompt_message is not string' do
+      subject do
+        described_class.configure { |config| config.require_confirm_prompt_message = {'not' => %w[a string] } }
+      end
+
+      it 'raises error' do
+        expect { subject }.to raise_error 'require_confirm_prompt_message must be string'
+      end
+    end
   end
 
   describe '.config' do

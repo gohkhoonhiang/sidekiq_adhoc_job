@@ -44,8 +44,9 @@ module SidekiqAdhocJob
     attr_accessor :load_paths,
                   :module_names,
                   :strategy_name,
-                  :require_confirm_worker_names,
-                  :require_confirm_prompt_message
+                  :require_confirm_worker_names
+
+    attr_reader :require_confirm_prompt_message
 
     def initialize
       @load_paths = []
@@ -59,6 +60,12 @@ module SidekiqAdhocJob
 
     def require_confirm
       @require_confirm ||= Array(@require_confirm_worker_names).map(&:to_s)
+    end
+
+    def require_confirm_prompt_message=(message)
+      raise 'require_confirm_prompt_message must be string' unless message.is_a? String
+
+      @require_confirm_prompt_message = message
     end
 
     def require_confirmation?(worker_name)
