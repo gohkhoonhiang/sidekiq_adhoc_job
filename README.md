@@ -36,6 +36,7 @@ Options:
   - `rails_application_job`: check for all classes that extend `ApplicationJob`
 - `load_paths` (optional - default `[]`): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
 - `require_confirm_worker_names` (optional - default `[]`): takes in a list of fully namespaced worker class names that the web UI will request for confirmation before running the job
+- `require_confirm_prompt_message` (optional - default `confirm`): takes a string that is used for challenge keyword before running jobs included in `require_confirm_worker_names`. This value must be a string, otherwise, an error with message `'require_confirm_prompt_message must be string'` will be raised
 
 ### Keyword Arguments Support (>= v2.1.0)
 
@@ -75,4 +76,8 @@ Note: There is no UI validation for the input, as the class inspector will not b
 
 ### Require Confirmation
 
-If the `require_confirm_worker_names` option is configured with the worker class name of the job you want to run, it will prompt for confirmation. You will be required to type a specific keyword for the job to run, otherwise, it will not run. This keyword is set to `confirm` by default and can be customized using `require_confirm_prompt_message` option. This helps to prevent accidentally running a critical job when not meant to be.
+If you're using sidekiq adhoc jobs in Production, you may want to consider using this configuration as an extra protection against erroneously running a sidekiq job. Once turned on, the user will be required to enter a challenge keyword in a prompt before the job can be run through the admin UI.
+
+To use this feature, add the worker class name of the jobs you would like to add the confirmation for into the `require_confirm_worker_names` option.
+
+The challenge keyword is set to be `confirm` as default, if you would like to configure the challenge keyword, you can use the `require_confirm_prompt_message` option.
