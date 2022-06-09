@@ -12,7 +12,8 @@ module SidekiqAdhocJob
                   :required_kw_args,
                   :optional_kw_args,
                   :has_rest_args,
-                  :require_confirm
+                  :require_confirm,
+                  :confirm_prompt_message
 
       StringUtil ||= ::SidekiqAdhocJob::Utils::String
 
@@ -27,6 +28,7 @@ module SidekiqAdhocJob
         @optional_kw_args = args[:key] || []
         @has_rest_args = !!args[:rest]
         @require_confirm = require_confirm
+        @confirm_prompt_message = SidekiqAdhocJob.config.require_confirm_prompt_message
       end
 
       # Builds the presenter instances for the schedule hash

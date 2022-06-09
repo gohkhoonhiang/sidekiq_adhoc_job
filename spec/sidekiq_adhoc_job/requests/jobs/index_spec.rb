@@ -25,7 +25,7 @@ RSpec.describe 'GET /adhoc_jobs' do
         <td>type</td>
         <td>dryrun</td>
         <td>false</td>
-        <td>false</td>
+        <td>true</td>
         <td class="text-center">
           <a class="btn btn-warn btn-xs" href="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker">
             View Job

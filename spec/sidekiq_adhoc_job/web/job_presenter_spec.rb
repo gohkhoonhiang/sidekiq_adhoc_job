@@ -24,7 +24,7 @@ RSpec.describe SidekiqAdhocJob::Web::JobPresenter do
         expect(job_presenter.required_kw_args).to eq %i(type)
         expect(job_presenter.optional_kw_args).to eq %i(dryrun)
         expect(job_presenter.has_rest_args).to eq false
-        expect(job_presenter.require_confirm).to eq false
+        expect(job_presenter.require_confirm).to eq true
 
         job_presenter = subject.find('sidekiq_adhoc_job_test_namespaced_worker')
         expect(job_presenter.name).to eq SidekiqAdhocJob::Test::NamespacedWorker
