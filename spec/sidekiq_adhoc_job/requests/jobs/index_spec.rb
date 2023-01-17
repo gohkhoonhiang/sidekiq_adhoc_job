@@ -15,25 +15,27 @@ RSpec.describe 'GET /adhoc_jobs' do
 
     expect(response_body).to include('<h3>Adhoc Jobs</h3>')
 
-    expect(response_body).to include(compact_html(
-      <<~HTML
-      <tr>
-        <td>SidekiqAdhocJob::Test::DummyWorker</td>
-        <td>dummy</td>
-        <td>id, overwrite</td>
-        <td>retry_job, retries, interval, name, options</td>
-        <td>type</td>
-        <td>dryrun</td>
-        <td>false</td>
-        <td>true</td>
-        <td class="text-center">
-          <a class="btn btn-warn btn-xs" href="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker">
-            View Job
-          </a>
-        </td>
-      </tr>
-      HTML
-    ))
+    expect(response_body).to include(
+      compact_html(
+        <<~HTML
+          <tr>
+            <td>SidekiqAdhocJob::Test::DummyWorker</td>
+            <td>dummy</td>
+            <td>id, overwrite</td>
+            <td>retry_job, retries, interval, name, options</td>
+            <td>type</td>
+            <td>dryrun</td>
+            <td>false</td>
+            <td>true</td>
+            <td class="text-center">
+              <a class="btn btn-warn btn-xs" href="/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker">
+                View Job
+              </a>
+            </td>
+          </tr>
+        HTML
+      )
+    )
   end
 
 end
