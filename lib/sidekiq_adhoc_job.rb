@@ -59,8 +59,15 @@ module SidekiqAdhocJob
       Array(@module_names).map(&:to_s)
     end
 
-    def require_confirm
-      @require_confirm ||= Array(@require_confirm_worker_names).map(&:to_s)
+    def require_confirm_proc
+      @require_confirm_proc ||= \
+        if @require_confirm_worker_names.respond_to?(:call)
+          @require_confirm_worker_names
+        else
+          shortlisted_workers = Array(@require_confirm_worker_names).map(&:to_s)
+
+          ->(worker_name) { shortlisted_workers.include?(worker_name) }
+        end
     end
 
     def require_confirm_prompt_message=(message)
@@ -70,7 +77,7 @@ module SidekiqAdhocJob
     end
 
     def require_confirmation?(worker_name)
-      require_confirm.include?(worker_name)
+      require_confirm_proc.call(worker_name)
     end
 
     def strategy
