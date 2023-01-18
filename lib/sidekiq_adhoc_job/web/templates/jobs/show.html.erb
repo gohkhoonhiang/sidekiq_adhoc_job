@@ -60,8 +60,13 @@
   <script>
     document.getElementById('adhoc-jobs-submit-form').addEventListener('submit', (event) => {
       const confirmPrompt = "<%= @presented_job.confirm_prompt_message %>";
-      if (prompt(`Please enter "${confirmPrompt}" to confirm`) !== confirmPrompt)
+      const input = prompt(`Please enter "${confirmPrompt}" to confirm`);
+      if (input !== confirmPrompt) {
         event.preventDefault();
+        if (input !== null) {
+          alert('Your confirmation input is incorrect, try again.');
+        }
+      }
     })
   </script>
 <% end %>
