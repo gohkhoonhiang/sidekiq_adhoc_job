@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.2.2
+
+- Allow configuration option `require_confirm_prompt_message` to accept a Proc or Ruby callable object.
+- Alert with error if challenge keyword is incorrect.
+
 ## 2.2.1
 
 - Add configuration option for `require_confirm_prompt_message` to prompt user to input a challenge keyword when attempting to run workers that require confirmation.
