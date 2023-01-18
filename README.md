@@ -23,6 +23,11 @@ SidekiqAdhocJob.configure do |config|
   config.module_names = ['YourProject::Worker']
   config.strategy_name = :active_job
   config.load_paths = ['app/jobs/**/*.rb']
+
+  config.require_confirm_worker_names = ['YourProject::Worker::A', 'YourProject::Worker::B']
+  # List of Symbols                   = %i[YourProject::Worker::A YourProject::Worker::B]
+  # Apply to worker name end with "A" = ->(worker_class) { worker_class.end_with?('A') }
+  # Ruby class that implements #call  = CallableObject.new
 end
 SidekiqAdhocJob.init
 ```
@@ -35,7 +40,7 @@ Options:
   - `active_job`: check for all classes that extend `ActiveJob::Base`
   - `rails_application_job`: check for all classes that extend `ApplicationJob`
 - `load_paths` (optional - default `[]`): takes in a list of file paths that the gem should load when initializing, in order to include the necessary classes in the app `ObjectSpace`
-- `require_confirm_worker_names` (optional - default `[]`): takes in a list of fully namespaced worker class names that the web UI will request for confirmation before running the job
+- `require_confirm_worker_names` (optional - default `[]`): takes in a Ruby callable object as predicate or fully namespaced worker class names that require confirmation before running the job through web UI.
 - `require_confirm_prompt_message` (optional - default `confirm`): takes a string that is used for challenge keyword before running jobs included in `require_confirm_worker_names`. This value must be a string, otherwise, an error with message `'require_confirm_prompt_message must be string'` will be raised
 
 ### Keyword Arguments Support (>= v2.1.0)
