@@ -32,7 +32,7 @@ RSpec.describe SidekiqAdhocJob do
     context '#require_confirm_worker_names' do
       let(:config) { subject.config }
 
-      context 'When given list of Strings' do
+      context 'when given list of Strings' do
         let(:require_confirm_worker_names) { %w[Test::IncludedWorker] }
 
         it 'returns all matching worker names' do
@@ -41,7 +41,7 @@ RSpec.describe SidekiqAdhocJob do
         end
       end
 
-      context 'When given list of Symbols' do
+      context 'when given list of Symbols' do
         let(:require_confirm_worker_names) { %i[Test::IncludedWorker] }
 
         it 'returns all matching worker names' do
@@ -50,7 +50,7 @@ RSpec.describe SidekiqAdhocJob do
         end
       end
 
-      context 'When given a Proc' do
+      context 'when given a Proc' do
         let(:require_confirm_worker_names) { ->(worker_name) { worker_name.start_with?('Test') } }
 
         it 'returns all matching worker names' do
@@ -59,7 +59,7 @@ RSpec.describe SidekiqAdhocJob do
         end
       end
 
-      context 'When given a Class that implements #call' do
+      context 'when given a Class that implements #call' do
         class self::CallableObject
           def call(worker_name)
             worker_name.end_with?('Job')
