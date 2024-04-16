@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.2.3
+
+- Bump Sidekiq dependency to version 7
+
 ## 2.2.2
 
 - Allow configuration option `require_confirm_prompt_message` to accept a Proc or Ruby callable object.
