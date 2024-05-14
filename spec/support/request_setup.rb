@@ -1,3 +1,4 @@
+require 'base64'
 require 'sidekiq/web'
 
 RSpec.shared_context 'request setup' do
