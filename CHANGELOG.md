@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.0 (Potential breaking change)
+
+- Update dependency versions
+  - sidekiq: constraint to < 8, supports Sidekiq 7
+
 ## 2.2.2
 
 - Allow configuration option `require_confirm_prompt_message` to accept a Proc or Ruby callable object.
