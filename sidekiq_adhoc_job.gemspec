@@ -29,8 +29,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 12.3.2'
   spec.add_development_dependency 'rspec', '~> 3.10.0'
-  spec.add_development_dependency 'rack-test', '~> 1.1.0'
+  spec.add_development_dependency 'rack', '~> 3.0.0'
+  spec.add_development_dependency 'rack-session', '~> 2.0.0'
+  spec.add_development_dependency 'rack-test', '~> 2.0.0'
   spec.add_development_dependency 'mock_redis', '~> 0.26.0'
+  spec.add_development_dependency 'base64'
 
-  spec.add_runtime_dependency 'sidekiq', '< 8'
+  spec.add_runtime_dependency 'sidekiq', '>= 6.0', '< 8'
 end

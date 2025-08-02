@@ -51,14 +51,21 @@ RSpec.configure do |config|
     require 'mock_redis'
     require 'sidekiq/redis_connection'
 
-    redis = MockRedis.new
-
     connection = {
       location: '127.0.0.1:6379',
       db: '0'
     }
 
+    config = double("RedisClient::Config", server_url: connection[:location])
+
+    redis = MockRedis.new
+
     redis.define_singleton_method(:connection) { connection }
+    redis.define_singleton_method(:config) { config }
+
+    # Stub methods missing in mock_redis due to Sidekiq 6+ migrated to using redis-client
+    # which has different APIs from mock_redis
+    allow(redis).to receive(:sscan) { |key| redis.common_scan(redis.smembers(key), 0, {}) }
 
     allow(Sidekiq::RedisConnection).to receive(:create).and_return(ConnectionPool.new({}) {
       redis
