@@ -1,4 +1,5 @@
 require 'sidekiq/web'
+require 'base64'
 
 RSpec.shared_context 'request setup' do
   def compact_html(html)
