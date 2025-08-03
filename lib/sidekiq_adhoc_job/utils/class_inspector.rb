@@ -48,7 +48,7 @@ module SidekiqAdhocJob
       end
 
       def klass_method(method)
-        return method if method.owner == klass_name
+        return method if method.owner == klass_name || !method.super_method
 
         klass_method(method.super_method)
       end

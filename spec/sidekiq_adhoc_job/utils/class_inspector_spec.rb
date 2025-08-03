@@ -41,4 +41,23 @@ RSpec.describe SidekiqAdhocJob::Utils::ClassInspector do
       end
     end
   end
+
+  context "with an inherited class without redefining method" do
+    before do
+      stub_const("TempWorker", Class.new(SidekiqAdhocJob::Test::DummyWorker))
+    end
+
+    let(:klass) { TempWorker }
+
+    describe "#parameters" do
+      it "returns the parameters of the parent method" do
+        expect(inspector.parameters(:perform)).to eq({
+          key: [:dryrun],
+          keyreq: [:type],
+          opt: [:retry_job, :retries, :interval, :name, :options],
+          req: [:id, :overwrite]
+        })
+      end
+    end
+  end
 end
