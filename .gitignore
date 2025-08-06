@@ -1,2 +1,5 @@
 *.gem
 *.gemspec.lock
+.tool-versions
+Gemfile.*.lock
+Gemfile.lock

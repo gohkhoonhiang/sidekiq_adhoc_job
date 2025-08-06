@@ -26,6 +26,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib/sidekiq_adhoc_job', 'lib']
 
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'base64'
+  spec.add_development_dependency 'ostruct'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 12.3.2'
   spec.add_development_dependency 'rspec', '~> 3.10.0'
