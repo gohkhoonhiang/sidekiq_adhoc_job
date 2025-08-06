@@ -57,7 +57,7 @@
 </form>
 
 <% if @presented_job.require_confirm %>
-  <script>
+  <script type="text/javascript" <%= defined?(:csp_nonce) && "nonce=\"#{csp_nonce}\""%>>
     document.getElementById('adhoc-jobs-submit-form').addEventListener('submit', (event) => {
       const confirmPrompt = "<%= @presented_job.confirm_prompt_message %>";
       const input = prompt(`Please enter "${confirmPrompt}" to confirm`);

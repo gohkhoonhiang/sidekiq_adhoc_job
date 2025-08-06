@@ -6,6 +6,12 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
   include_context 'SidekiqAdhocJob setup'
   include_context 'request setup'
 
+  def check_script_csp_nonce(response_body = last_response.body)
+    if Sidekiq::VERSION >= '7.3.0'
+      expect(response_body).to include("nonce=\"#{last_request.env[:csp_nonce]}\"")
+    end
+  end
+
   context 'has arguments' do
     it 'generates form for running job' do
       get '/adhoc-jobs/sidekiq_adhoc_job_test_dummy_worker'
@@ -70,6 +76,8 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
           HTML
         )
       )
+
+      check_script_csp_nonce(response_body)
     end
   end
 
@@ -114,6 +122,8 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
           HTML
         )
       )
+
+      check_script_csp_nonce(response_body)
     end
   end
 
@@ -134,6 +144,8 @@ RSpec.describe 'GET /adhoc_jobs/:name' do
       )
 
       expect(response_body).to include('<p>No job arguments</p>')
+
+      check_script_csp_nonce(response_body)
     end
   end
 
